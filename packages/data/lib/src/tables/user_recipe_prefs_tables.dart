@@ -3,7 +3,7 @@ import 'package:drift/drift.dart';
 
 /// Per-user recipe settings. See `UserRecipePrefs` in `packages/domain`.
 @DataClassName('UserRecipePrefsRow')
-class UserRecipePrefsTable extends Table {
+class UserRecipePrefsTable() extends Table {
   @override
   String get tableName => 'user_recipe_prefs';
 

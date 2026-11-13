@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:recipe_app/app/services/error_reporter.dart';
 import 'package:recipe_app/bootstrap.dart';
 
-class _RecordingReporter implements ErrorReporter {
+class _RecordingReporter() implements ErrorReporter {
   final errors = <Object>[];
 
   @override

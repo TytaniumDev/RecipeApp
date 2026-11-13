@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 /// Font families bundled with this package (DESIGN_SYSTEM.md §5.1).
-abstract final class AppFonts {
+abstract final class AppFonts() {
   /// The package that bundles the fonts, for `TextStyle.package`.
   static const package = 'design_system';
 
@@ -44,9 +44,9 @@ TextStyle appTextStyle({
 /// Sizes and line heights are Material's, repeated here so the theme is
 /// complete on its own and the serif's optical size can follow the size.
 /// Letter spacing and colors come from Material's defaults.
-abstract final class AppTextTheme {
+abstract final class AppTextTheme() {
   /// The text theme for every scheme.
-  static final TextTheme textTheme = TextTheme(
+  static final textTheme = TextTheme(
     displayLarge: _serif(500, 57, 64),
     displayMedium: _serif(500, 45, 52),
     displaySmall: _serif(500, 36, 44),
@@ -125,7 +125,7 @@ class const AppTypography({
   required final TextStyle cookingTimer,
 }) extends ThemeExtension<AppTypography> {
   /// The same styles for every scheme. Colors come from the widget.
-  static final AppTypography standard = AppTypography(
+  static final standard = AppTypography(
     numberHero: _sans(600, 32, 40, tabular: true),
     numberLarge: _sans(600, 20, 28, tabular: true),
     number: _sans(500, 14, 20, tabular: true),

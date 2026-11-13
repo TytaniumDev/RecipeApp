@@ -7,7 +7,7 @@ part 'error_reporter.g.dart';
 ///
 /// The real implementation (Sentry, ENGINEERING.md §17) replaces
 /// [DebugErrorReporter] in [errorReporter] once the account exists.
-abstract interface class ErrorReporter {
+abstract interface class ErrorReporter() {
   Future<void> report(Object error, StackTrace stackTrace);
 }
 

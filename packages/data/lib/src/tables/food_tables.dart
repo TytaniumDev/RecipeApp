@@ -12,7 +12,7 @@ import 'package:drift/drift.dart';
   columns: {#source, #externalId},
   unique: true,
 )
-class Foods extends Table {
+class Foods() extends Table {
   TextColumn get id => text()();
   TextColumn get source => textEnum<NutritionSource>()();
   TextColumn get externalId => text()();
@@ -25,7 +25,7 @@ class Foods extends Table {
 
 /// Nutrient amounts per 100 g. See `FoodNutrient`.
 @DataClassName('FoodNutrientRow')
-class FoodNutrients extends Table {
+class FoodNutrients() extends Table {
   TextColumn get foodId => text()();
   TextColumn get nutrientCode => text()();
   RealColumn get amountPer100g => real()();
@@ -37,7 +37,7 @@ class FoodNutrients extends Table {
 /// Household portions with gram weights. See `FoodPortion`.
 @DataClassName('FoodPortionRow')
 @TableIndex(name: 'food_portions_food', columns: {#foodId})
-class FoodPortions extends Table {
+class FoodPortions() extends Table {
   TextColumn get id => text()();
   TextColumn get foodId => text()();
   IntColumn get amountNumerator => integer()();
@@ -57,7 +57,7 @@ class FoodPortions extends Table {
   columns: {#ingredientLineId},
   unique: true,
 )
-class NutritionMatches extends Table {
+class NutritionMatches() extends Table {
   TextColumn get id => text()();
   TextColumn get ingredientLineId => text()();
   TextColumn get foodId => text()();

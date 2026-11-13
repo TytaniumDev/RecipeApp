@@ -24,7 +24,7 @@ class const AuthUser({
 /// Google and Apple sign-in through Firebase Auth.
 ///
 /// [SignedOutAuthService] stands in until the Firebase project exists.
-abstract interface class AuthService {
+abstract interface class AuthService() {
   /// The current user, or null when signed out.
   Stream<AuthUser?> watchUser();
 

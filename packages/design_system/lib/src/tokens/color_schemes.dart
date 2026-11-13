@@ -5,7 +5,7 @@ import 'package:material_ui/material_ui.dart';
 ///
 /// The values are copied from the tables in DESIGN_SYSTEM.md. When a
 /// value changes, change it in DESIGN_SYSTEM.md in the same pull request.
-abstract final class AppColorSchemes {
+abstract final class AppColorSchemes() {
   /// Light theme, Material standard contrast.
   static const light = ColorScheme(
     brightness: .light,

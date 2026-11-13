@@ -4,7 +4,7 @@ import 'package:recipe_app/features/experiments/presentation/experiments_screen.
 
 /// Routes owned by the experiments feature. Recipe experiments and history (PRD
 /// 7.11).
-abstract final class ExperimentsRoutes {
+abstract final class ExperimentsRoutes() {
   static const path = '/history/:recipeId';
 
   /// The location for [recipeId], for `context.go` and `context.push`.

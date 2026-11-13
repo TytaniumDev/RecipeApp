@@ -7,7 +7,7 @@ import 'package:drift/drift.dart';
 
 /// Recipes. See `Recipe` in `packages/domain`.
 @DataClassName('RecipeRow')
-class Recipes extends Table {
+class Recipes() extends Table {
   TextColumn get id => text()();
   TextColumn get title => text()();
   IntColumn get servingsNumerator => integer()();
@@ -29,7 +29,7 @@ class Recipes extends Table {
 /// Named groups of ingredient lines. See `IngredientSection`.
 @DataClassName('IngredientSectionRow')
 @TableIndex(name: 'ingredient_sections_recipe', columns: {#recipeId})
-class IngredientSections extends Table {
+class IngredientSections() extends Table {
   TextColumn get id => text()();
   TextColumn get recipeId => text()();
   TextColumn get name => text()();
@@ -42,7 +42,7 @@ class IngredientSections extends Table {
 /// Ingredient lines with their parsed parts. See `IngredientLine`.
 @DataClassName('IngredientLineRow')
 @TableIndex(name: 'ingredient_lines_recipe', columns: {#recipeId})
-class IngredientLines extends Table {
+class IngredientLines() extends Table {
   TextColumn get id => text()();
   TextColumn get recipeId => text()();
   TextColumn get sectionId => text().nullable()();
@@ -63,7 +63,7 @@ class IngredientLines extends Table {
 /// Named, reorderable groups of steps. See `StepSection`.
 @DataClassName('StepSectionRow')
 @TableIndex(name: 'step_sections_recipe', columns: {#recipeId})
-class StepSections extends Table {
+class StepSections() extends Table {
   TextColumn get id => text()();
   TextColumn get recipeId => text()();
   TextColumn get name => text()();
@@ -76,7 +76,7 @@ class StepSections extends Table {
 /// Recipe steps. See `RecipeStep`.
 @DataClassName('RecipeStepRow')
 @TableIndex(name: 'recipe_steps_recipe', columns: {#recipeId})
-class RecipeSteps extends Table {
+class RecipeSteps() extends Table {
   TextColumn get id => text()();
   TextColumn get recipeId => text()();
   TextColumn get sectionId => text().nullable()();

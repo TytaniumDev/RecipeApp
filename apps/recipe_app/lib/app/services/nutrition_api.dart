@@ -14,7 +14,7 @@ typedef OnlineFood = ({
 /// Facts (ENGINEERING.md §11.1).
 ///
 /// [OfflineNutritionApi] stands in until the USDA proxy exists.
-abstract interface class NutritionApi {
+abstract interface class NutritionApi() {
   Future<List<OnlineFood>> search(String query);
 
   Future<OnlineFood?> lookupBarcode(String barcode);

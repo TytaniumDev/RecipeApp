@@ -5,7 +5,7 @@ part 'entitlements.g.dart';
 /// Whether the user has Pro (RevenueCat, ENGINEERING.md §9).
 ///
 /// [FreeEntitlements] stands in until RevenueCat is set up.
-abstract interface class Entitlements {
+abstract interface class Entitlements() {
   Stream<bool> watchIsPro();
 }
 

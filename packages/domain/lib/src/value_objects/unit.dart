@@ -1,5 +1,9 @@
 /// What a [Unit] measures.
-enum UnitDimension { volume, mass, count }
+enum UnitDimension() {
+  volume,
+  mass,
+  count,
+}
 
 /// A measuring unit the app understands.
 ///

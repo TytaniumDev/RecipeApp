@@ -8,7 +8,7 @@ class const _Counter() extends StatefulWidget {
   State<_Counter> createState() => _CounterState();
 }
 
-class _CounterState extends State<_Counter> {
+class _CounterState() extends State<_Counter> {
   var _count = 0;
 
   @override

@@ -13,7 +13,7 @@ class const DelayedProgressIndicator({
       _DelayedProgressIndicatorState();
 }
 
-class _DelayedProgressIndicatorState extends State<DelayedProgressIndicator> {
+class _DelayedProgressIndicatorState() extends State<DelayedProgressIndicator> {
   late final Timer _timer;
   var _visible = false;
 
