@@ -9,6 +9,6 @@ part 'folder_dao.g.dart';
 /// Empty in the scaffold. The data task for this aggregate adds its queries
 /// (docs/BUILD_PLAN.md).
 @DriftAccessor(tables: [Folders, FolderEntries])
-class FolderDao extends DatabaseAccessor<AppDatabase> with _$FolderDaoMixin {
-  new(super.attachedDatabase);
-}
+class FolderDao(super.attachedDatabase)
+    extends DatabaseAccessor<AppDatabase>
+    with _$FolderDaoMixin;

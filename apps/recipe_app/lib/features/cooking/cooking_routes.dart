@@ -4,7 +4,7 @@ import 'package:recipe_app/features/cooking/presentation/cooking_screen.dart';
 
 /// Routes owned by the cooking feature. Cooking mode, the signature feature
 /// (PRD 7.5, DESIGN_SYSTEM §10.3).
-abstract final class CookingRoutes {
+abstract final class CookingRoutes() {
   static const path = '/cook/:recipeId';
 
   /// The location for [recipeId], for `context.go` and `context.push`.

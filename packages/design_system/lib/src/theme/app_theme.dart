@@ -8,7 +8,7 @@ import 'package:material_ui/material_ui.dart';
 ///
 /// `MaterialApp` gets [light] and [dark]. Cooking mode wraps its route in
 /// `Theme(data: AppTheme.cooking(brightness))`, using the active brightness.
-abstract final class AppTheme {
+abstract final class AppTheme() {
   /// The light theme.
   static ThemeData light() => _build(AppColorSchemes.light, AppColors.light);
 

@@ -6,7 +6,7 @@ part 'theme_mode_controller.g.dart';
 /// The Light / Dark / System setting (DESIGN_SYSTEM.md §3). Follows the
 /// system until the user picks. Saving the choice is a settings task.
 @Riverpod(keepAlive: true)
-class ThemeModeController extends _$ThemeModeController {
+class ThemeModeController() extends _$ThemeModeController {
   @override
   ThemeMode build() => .system;
 

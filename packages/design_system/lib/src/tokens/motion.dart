@@ -5,7 +5,7 @@ import 'package:flutter/physics.dart';
 ///
 /// Spatial springs move things and may overshoot a little. Effects springs
 /// change color and opacity and never overshoot. All have mass 1.
-abstract final class AppMotion {
+abstract final class AppMotion() {
   /// Small things: checkboxes, chips, switches, a badge count.
   static final SpringDescription spatialFast = _spring(
     dampingRatio: 0.6,
@@ -61,15 +61,15 @@ abstract final class AppMotion {
 /// final curve = SpringCurve(AppMotion.spatialDefault);
 /// AnimatedContainer(duration: curve.duration, curve: curve, ...);
 /// ```
-class SpringCurve extends Curve {
-  /// Creates a curve that samples [spring].
-  new(this.spring) : duration = _settleDuration(spring);
-
+// Not const: [duration] is computed from the spring when the curve is
+// created, so it is worked out once instead of on every read.
+// ignore: prefer_const_constructors_in_immutables
+class SpringCurve(
   /// The spring this curve follows.
-  final SpringDescription spring;
-
+  final SpringDescription spring,
+) extends Curve {
   /// How long the spring takes to settle at 1.
-  final Duration duration;
+  final Duration duration = _settleDuration(spring);
 
   static const _maxDuration = Duration(seconds: 3);
   static const _step = Duration(milliseconds: 1);

@@ -5,7 +5,7 @@ import 'package:material_ui/material_ui.dart';
 /// Component themes that give Material widgets our shapes and surfaces
 /// (DESIGN_SYSTEM.md §6.4, §9.1). Buttons keep Material's fully rounded
 /// default.
-abstract final class AppComponentThemes {
+abstract final class AppComponentThemes() {
   static CardThemeData card(ColorScheme scheme) => CardThemeData(
     color: scheme.surfaceContainerLow,
     elevation: 0,

@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 /// Font families bundled with this package (DESIGN_SYSTEM.md §5.1).
-abstract final class AppFonts {
+abstract final class AppFonts() {
   /// The package that bundles the fonts, for `TextStyle.package`.
   static const package = 'design_system';
 
@@ -44,9 +44,9 @@ TextStyle appTextStyle({
 /// Sizes and line heights are Material's, repeated here so the theme is
 /// complete on its own and the serif's optical size can follow the size.
 /// Letter spacing and colors come from Material's defaults.
-abstract final class AppTextTheme {
+abstract final class AppTextTheme() {
   /// The text theme for every scheme.
-  static final TextTheme textTheme = TextTheme(
+  static final textTheme = TextTheme(
     displayLarge: _serif(500, 57, 64),
     displayMedium: _serif(500, 45, 52),
     displaySmall: _serif(500, 36, 44),
@@ -87,24 +87,45 @@ abstract final class AppTextTheme {
 /// Cooking styles come in a compact size and a `Large` size for medium and
 /// expanded windows.
 @immutable
-class AppTypography extends ThemeExtension<AppTypography> {
-  const new({
-    required this.numberHero,
-    required this.numberLarge,
-    required this.number,
-    required this.amount,
-    required this.cookingStep,
-    required this.cookingStepLarge,
-    required this.cookingAmount,
-    required this.cookingAmountLarge,
-    required this.cookingIngredient,
-    required this.cookingIngredientLarge,
-    required this.cookingSection,
-    required this.cookingTimer,
-  });
+class const AppTypography({
+  /// Calories per serving at the top of the nutrition card.
+  required final TextStyle numberHero,
 
+  /// Macro grams in the macro summary.
+  required final TextStyle numberLarge,
+
+  /// Values in nutrition tables, grocery quantities.
+  required final TextStyle number,
+
+  /// An amount inside running text. Inherits the surrounding size.
+  required final TextStyle amount,
+
+  /// Step text in cooking mode on compact windows.
+  required final TextStyle cookingStep,
+
+  /// Step text in cooking mode on medium and expanded windows.
+  required final TextStyle cookingStepLarge,
+
+  /// Amounts inside cooking steps on compact windows.
+  required final TextStyle cookingAmount,
+
+  /// Amounts inside cooking steps on medium and expanded windows.
+  required final TextStyle cookingAmountLarge,
+
+  /// The ingredients-for-this-step panel on compact windows.
+  required final TextStyle cookingIngredient,
+
+  /// The ingredients-for-this-step panel on medium and expanded windows.
+  required final TextStyle cookingIngredientLarge,
+
+  /// Section name and step count ("Prep · Step 2 of 5").
+  required final TextStyle cookingSection,
+
+  /// Timer countdowns.
+  required final TextStyle cookingTimer,
+}) extends ThemeExtension<AppTypography> {
   /// The same styles for every scheme. Colors come from the widget.
-  static final AppTypography standard = AppTypography(
+  static final standard = AppTypography(
     numberHero: _sans(600, 32, 40, tabular: true),
     numberLarge: _sans(600, 20, 28, tabular: true),
     number: _sans(500, 14, 20, tabular: true),
@@ -118,42 +139,6 @@ class AppTypography extends ThemeExtension<AppTypography> {
     cookingSection: _sans(600, 18, 24),
     cookingTimer: _sans(600, 40, 48, tabular: true),
   );
-
-  /// Calories per serving at the top of the nutrition card.
-  final TextStyle numberHero;
-
-  /// Macro grams in the macro summary.
-  final TextStyle numberLarge;
-
-  /// Values in nutrition tables, grocery quantities.
-  final TextStyle number;
-
-  /// An amount inside running text. Inherits the surrounding size.
-  final TextStyle amount;
-
-  /// Step text in cooking mode on compact windows.
-  final TextStyle cookingStep;
-
-  /// Step text in cooking mode on medium and expanded windows.
-  final TextStyle cookingStepLarge;
-
-  /// Amounts inside cooking steps on compact windows.
-  final TextStyle cookingAmount;
-
-  /// Amounts inside cooking steps on medium and expanded windows.
-  final TextStyle cookingAmountLarge;
-
-  /// The ingredients-for-this-step panel on compact windows.
-  final TextStyle cookingIngredient;
-
-  /// The ingredients-for-this-step panel on medium and expanded windows.
-  final TextStyle cookingIngredientLarge;
-
-  /// Section name and step count ("Prep · Step 2 of 5").
-  final TextStyle cookingSection;
-
-  /// Timer countdowns.
-  final TextStyle cookingTimer;
 
   static TextStyle _sans(
     int weight,

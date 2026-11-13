@@ -3,7 +3,7 @@ import 'package:recipe_app/features/import/presentation/import_screen.dart';
 
 /// Routes owned by the import feature. Importing recipes from a URL or Umami
 /// (PRD 7.2).
-abstract final class ImportRoutes {
+abstract final class ImportRoutes() {
   static const path = '/import';
 
   static final List<RouteBase> routes = [

@@ -1,8 +1,12 @@
+// An interface has no code to run; only its empty primary constructor
+// would show up, as an uncovered line.
+// coverage:ignore-file
+
 import 'package:domain/src/entities/folder.dart';
 import 'package:domain/src/value_objects/ids.dart';
 
 /// Folders and which recipes are in them.
-abstract interface class FolderRepository {
+abstract interface class FolderRepository() {
   Stream<List<Folder>> watchFolders();
 
   Stream<List<RecipeId>> watchRecipeIdsInFolder(FolderId folderId);

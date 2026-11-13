@@ -17,6 +17,6 @@ part 'recipe_dao.g.dart';
     RecipeSteps,
   ],
 )
-class RecipeDao extends DatabaseAccessor<AppDatabase> with _$RecipeDaoMixin {
-  new(super.attachedDatabase);
-}
+class RecipeDao(super.attachedDatabase)
+    extends DatabaseAccessor<AppDatabase>
+    with _$RecipeDaoMixin;

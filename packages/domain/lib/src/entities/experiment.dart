@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'experiment.freezed.dart';
 
 /// What happened to an experiment (PRD 7.11).
-enum ExperimentOutcome {
+enum ExperimentOutcome() {
   /// Still being tried.
   open,
 

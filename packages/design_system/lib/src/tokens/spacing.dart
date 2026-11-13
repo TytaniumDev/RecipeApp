@@ -3,7 +3,7 @@
 ///
 /// They are constants rather than a theme extension so that widgets using
 /// them can stay `const`.
-abstract final class AppSpacing {
+abstract final class AppSpacing() {
   /// 4 dp. Icon-to-label gap inside chips.
   static const double space1 = 4;
 

@@ -5,7 +5,7 @@ import 'package:drift/drift.dart';
 @DataClassName('ChangeRow')
 @TableIndex(name: 'change_log_field', columns: {#entity, #entityId, #field})
 @TableIndex(name: 'change_log_hlc', columns: {#hlc})
-class ChangeLog extends Table {
+class ChangeLog() extends Table {
   TextColumn get id => text()();
 
   /// Entity kind, such as "recipe" or "ingredient_line".
@@ -32,7 +32,7 @@ class ChangeLog extends Table {
 
 /// How far each transport has pushed and pulled (ENGINEERING.md §8.2).
 @DataClassName('SyncStateRow')
-class SyncState extends Table {
+class SyncState() extends Table {
   /// Which transport and space, such as `drive` or `firestore:<spaceId>`.
   TextColumn get transportKey => text()();
 

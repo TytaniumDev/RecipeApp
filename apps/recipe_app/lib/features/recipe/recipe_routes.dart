@@ -4,7 +4,7 @@ import 'package:recipe_app/features/recipe/presentation/recipe_screen.dart';
 
 /// Routes owned by the recipe feature. The recipe page: ingredients, steps,
 /// nutrition, notes (DESIGN_SYSTEM §10.1).
-abstract final class RecipeRoutes {
+abstract final class RecipeRoutes() {
   static const path = '/recipes/:recipeId';
 
   /// The location for [recipeId], for `context.go` and `context.push`.
