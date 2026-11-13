@@ -43,7 +43,7 @@ Each decision is marked:
 | Open Food Facts | Fetched online and cached | Decided |
 | URL import | On device; web goes through a thin fetch proxy | Decided |
 | Ingredient parsing | Our own rule-based Dart parser | Decided |
-| Code structure | Pub workspace: Flutter app plus pure-Dart core packages | Pending |
+| Code structure | Pub workspace: Flutter app plus pure-Dart core packages | Decided |
 | Testing | Unit (with fixtures), widget (with rebuild counts), golden, integration | Decided |
 | Lints | `very_good_analysis` | Decided |
 | CI | GitHub Actions, added with the app scaffold PR | Decided |
@@ -77,7 +77,7 @@ Each decision is marked:
 - Repositories expose **streams** (Drift watch queries), so every change flows to the UI automatically, whether it was made locally or arrived through sync.
 - Writes go through use cases, which write to Drift **and** append to the change log in the same transaction (§7).
 
-### 4.2 Module structure *(pending Tyler's pick; drafted with the recommended option)*
+### 4.2 Module structure *(Decided)*
 
 The repo is a [pub workspace](https://dart.dev/tools/pub/workspaces): one root `pubspec.yaml` lists the member packages. They share one lockfile and one `pub get`.
 
@@ -321,6 +321,5 @@ Because both carry the same change log, **switching transports** means replaying
 
 ## 18. Open questions
 
-1. **Module structure:** confirm the pub workspace layout in §4.2.
-2. **Umami format:** confirm the export format against real files before building import and export.
-3. **Drive sync cadence:** tune the polling interval against Drive API quotas during the beta.
+1. **Umami format:** confirm the export format against real files before building import and export.
+2. **Drive sync cadence:** tune the polling interval against Drive API quotas during the beta.
