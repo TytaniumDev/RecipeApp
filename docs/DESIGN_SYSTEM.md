@@ -131,6 +131,8 @@ Material has no roles for macros or warnings, so we add them through an `AppColo
 | `warning-container` | `#ffdcc0` | `#6b3b00` | `#ffdcc0` | `#4b2800` | Background of warning chips and banners. |
 | `on-warning-container` | `#6b3b00` | `#ffdcc0` | `#2d1600` | `#ffeee1` | Text and icons on warning-container. |
 
+Macro and warning colors used as text meet their contrast target on `surface` through `surface-container-high`. In the cooking-light scheme they fall just short of 7:1 on `surface-container-highest` (about 6.5:1), so don't put macro or warning text on that level in cooking mode. The contrast test checks exactly this set.
+
 ### 4.4 Rules
 
 - Text and icons sit on their paired surface: `on-primary` on `primary`, `on-surface` on `surface` and the `surface-container` levels, and so on. Every pair in the tables meets 4.5:1 (7:1 in the cooking schemes), and a unit test checks them (§12).
@@ -479,12 +481,13 @@ packages/design_system/
 - Cooking mode wraps its route in `Theme(data: AppTheme.cooking(brightness))`, using the brightness of the active theme.
 - `useMaterial3: true`, `visualDensity: VisualDensity.standard` on every platform.
 - No dynamic color: we never read wallpaper colors.
-- App-specific values (macro colors, warning, extra text styles, spacing, radii, motion) are `ThemeExtension`s, read through small context extensions such as `context.appColors.protein`, so widgets never hard-code values.
+- Values that change with the scheme (macro colors, warning, extra text styles) are `ThemeExtension`s, read through small context extensions such as `context.appColors.protein`. Values that never change (spacing, radii, motion) are constants (`AppSpacing.space4`, `AppRadii.borderMd`, `AppMotion.spatialDefault`), so widgets that use them can stay `const`. Either way, widgets never hard-code values.
+- Material widgets come from `package:material_ui` (`import 'package:material_ui/material_ui.dart'`). Flutter deprecated `package:flutter/material.dart` in 3.47 when Material moved into its own package.
 
 ### 13.3 Rules
 
 - No hex colors, raw font sizes, or raw spacing numbers outside `packages/design_system`. A custom lint (or a `grep` check in CI) flags `Color(0x`, `fontSize:`, and `EdgeInsets.all(<number>)` in `apps/`.
-- `design_system` depends only on Flutter, `material_symbols_icons`, and its own fonts. Never on `domain`, Riverpod, or any feature.
+- `design_system` depends only on Flutter, `material_ui`, `material_symbols_icons`, and its own fonts. Never on `domain`, Riverpod, or any feature.
 - New shared widgets go into `design_system` only once two features need them. Until then they live in the feature folder.
 
 ## 14. Open questions

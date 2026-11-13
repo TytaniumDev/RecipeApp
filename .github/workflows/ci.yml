@@ -67,6 +67,8 @@ jobs:
         include:
           - package: packages/data
             min_coverage: 90
+          - package: packages/design_system
+            min_coverage: 90
           - package: packages/domain
             min_coverage: 90
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v2

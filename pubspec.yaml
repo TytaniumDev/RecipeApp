@@ -7,6 +7,7 @@ environment:
 
 workspace:
   - packages/data
+  - packages/design_system
   - packages/domain
   - packages/ingredient_parser
   - packages/measuring
