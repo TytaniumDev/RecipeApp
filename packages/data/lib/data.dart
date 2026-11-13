@@ -1,5 +1,5 @@
 /// Drift database schema, DAOs, and repository implementations for
-/// Recipe App.
+/// Sousline.
 library;
 
 export 'src/app_database.dart';

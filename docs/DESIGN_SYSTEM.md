@@ -1,4 +1,4 @@
-# Recipe App: Design System
+# Sousline: Design System
 
 | | |
 |---|---|
@@ -11,7 +11,7 @@
 
 ## 1. Purpose
 
-This document defines how Recipe App looks, moves, and reads: the design tokens, the shared components in `packages/design_system`, and the patterns screens are built from. The PRD says *what* we build and the engineering doc says *how* it's structured. This doc says what it looks like and how it behaves.
+This document defines how Sousline looks, moves, and reads: the design tokens, the shared components in `packages/design_system`, and the patterns screens are built from. The PRD says *what* we build and the engineering doc says *how* it's structured. This doc says what it looks like and how it behaves.
 
 When a token, component, or pattern changes, update this doc in the same pull request.
 
@@ -49,7 +49,7 @@ Decisions are marked the same way as in the engineering doc:
 | Color generation | Material color utilities, from our own palettes, committed as constants | Default |
 | Macro colors | Reddish-brown protein, amber carbs, blue fat | Decided |
 
-A visual companion with live previews of these tokens and components lives in the Claude Design System library: [Recipe App](https://claude.ai/artifact/Dr7eWvdaMkQAAs1KN6Amqv) (private to Tyler unless shared). This file is the source of truth. If the two disagree, this file wins and the companion gets updated.
+A visual companion with live previews of these tokens and components lives in the Claude Design System library: [Sousline](https://claude.ai/artifact/Dr7eWvdaMkQAAs1KN6Amqv) (private to Tyler unless shared). This file is the source of truth. If the two disagree, this file wins and the companion gets updated.
 
 ## 4. Color
 
@@ -415,7 +415,7 @@ Cooking text has fixed large sizes (§5.3), larger on medium and expanded screen
 
 ### 10.10 Pro
 
-- Pro features show `ProBadge` where they're offered (sync through Recipe App, sharing). Tapping one explains what Pro does and its price in one sheet.
+- Pro features show `ProBadge` where they're offered (sync through Sousline, sharing). Tapping one explains what Pro does and its price in one sheet.
 - No nagging: no upsell pop-ups on launch, and no features shown and then locked mid-task.
 
 ## 11. Content and voice
@@ -493,4 +493,4 @@ packages/design_system/
 ## 14. Open questions
 
 1. **Custom measuring-tool icons:** ship as an icon font (one asset, colors like any icon) or as SVGs through `flutter_svg` (easier to draw and update)? Icon font is the default.
-2. **App name and logo:** the working name is still "Recipe App" (PRD). The cover, app icon, and splash screen wait for a real name.
+2. **Logo:** the name is Sousline (Tyler, 2026-11-13). The cover, app icon, and splash screen still need a logo.
