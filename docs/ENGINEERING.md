@@ -52,6 +52,7 @@ Each decision is marked:
 | Immutable models | `freezed` + `json_serializable` | Default |
 | Subscriptions | RevenueCat (App Store, Play, web via Stripe) | Default |
 | Crash and error reporting | Sentry (works on all three platforms) | Default |
+| Release builds | fastlane on GitHub Actions; one Firebase project (no dev/prod split) | Decided |
 
 ## 4. Architecture
 
@@ -251,7 +252,7 @@ Because both carry the same change log, **switching transports** means replaying
 
 ### 11.1 Data sources
 
-- **Bundled:** USDA FoodData Central *Foundation Foods* and *SR Legacy* (generic ingredients), with nutrients and household portions. `tools/usda_builder` turns the official CSV release into a compact SQLite file, a few MB in size. On web it's downloaded once on first launch and cached.
+- **Bundled:** USDA FoodData Central *Foundation Foods* and *SR Legacy* (generic ingredients), with nutrients and household portions. `tools/usda_builder` turns the official CSV release into a compact SQLite file, a few MB in size. The file is committed to the repo as a normal file (no Git LFS) and regenerated only with the tool. On web it's downloaded once on first launch and cached.
 - **Online, then cached:** USDA *Branded Foods* through our Cloud Function proxy, and Open Food Facts via its public API. Looked-up foods are saved to Drift, so recipes using them keep working offline.
 - **Licensing:** USDA data is public domain. Open Food Facts data is ODbL (share-alike), so we keep attribution and keep OFF data separate from our own data.
 

@@ -167,7 +167,7 @@ Paths are relative to the repo root. `app/` means `apps/recipe_app/`. Every task
 | FND-1 | **Quantities and units.** Rational arithmetic on `Quantity`, unit aliases and families (US volume, metric volume, weight, count), conversion between US customary and metric, scaling by servings or multiplier, rounding to amounts people can measure (PRD 7.6) | `packages/domain/lib/src/value_objects/` (the `Quantity` and `Unit` files) and a new `packages/domain/lib/src/units/` | S0 | ⅓ cup × 3 equals 1 cup exactly; conversion and rounding tables are unit-tested; 90% coverage |
 | BE-0 | **Firebase skeleton.** `functions/` TypeScript project, `firebase.json`, `firestore.rules` (deny all), `storage.rules` (deny all), emulator config using a `demo-recipeapp` project id (works with no real project), rules test harness, CI job that lints, builds, and runs function and rules tests against the emulators | `functions/**`, `firebase.json`, `.firebaserc`, `firestore.rules`, `firestore.indexes.json`, `storage.rules`, `.github/workflows/functions.yaml` | S0 | CI runs the emulators and a sample rules test passes; no real Firebase project needed |
 | SYN-1 | **Clock and merge core.** Hybrid logical clock, `Change` model (ENGINEERING §8.1), per-field last-writer-wins merge, tombstones, idempotent apply, and the "losing long text goes to history" rule as a pure function | `packages/sync/lib/src/core/` | S0 | Randomized multi-device tests show every replica converges; 90% coverage |
-| USDA-1 | **USDA builder.** CLI that turns the FoodData Central Foundation and SR Legacy CSV releases into the compact read-only SQLite file (foods, nutrients, portions), with a fixed schema version. Open question §9.1 (where the output file lives) must be settled before this merges | `tools/usda_builder/**` | S0 | Running the CLI on the official release produces the file; schema documented in the tool's README; tests run on a small CSV fixture |
+| USDA-1 | **USDA builder.** CLI that turns the FoodData Central Foundation and SR Legacy CSV releases into the compact read-only SQLite file (foods, nutrients, portions), with a fixed schema version. The generated file is committed to the repo as a normal file, no Git LFS (§9.1) | `tools/usda_builder/**`, `apps/recipe_app/assets/nutrition/usda_foods.sqlite` | S0 | Running the CLI on the official release produces the file and it is committed; the file is only ever regenerated with the CLI, never edited by hand; schema documented in the tool's README; tests run on a small CSV fixture |
 | OBS-1 | **Crash reporting.** Sentry implementation of the scaffold's `ErrorReporter`, reading the DSN from a `--dart-define`, off when no DSN is set. Debug-symbol and source-map upload left to `REL-1` | `app/lib/bootstrap.dart` (Sentry wiring only), `app/lib/shared/error_reporting/` | S0 | Errors reach Sentry when a DSN is given; the app runs with none; tests use a fake reporter |
 
 ### 6.2 Design system components
@@ -250,7 +250,7 @@ Each feature task owns `app/lib/features/<name>/**` and `app/test/features/<name
 
 | ID | Task | Owns | Depends on | Done when |
 |---|---|---|---|---|
-| REL-1 | **Release pipeline.** Signed iOS and Android builds, TestFlight and Play internal testing uploads, Firebase Hosting deploy for web, Sentry symbol and source-map upload. Uses the single Firebase project (§8.1). See open question §9.2 | `.github/workflows/release*.yaml`, `apps/recipe_app/ios/fastlane/` or equivalent, `apps/recipe_app/android/fastlane/` | §8 accounts, OBS-1 | A tagged commit produces builds testers can install |
+| REL-1 | **Release pipeline.** Signed iOS and Android builds, TestFlight and Play internal testing uploads, Firebase Hosting deploy for web, Sentry symbol and source-map upload. Uses the single Firebase project (§8.1) and fastlane on GitHub Actions (§9.2) | `.github/workflows/release*.yaml`, `apps/recipe_app/ios/fastlane/`, `apps/recipe_app/android/fastlane/`, `apps/recipe_app/Gemfile` | §8 accounts, OBS-1 | A tagged commit produces builds testers can install |
 | E2E-1 | **Integration tests.** Import → edit → cook → grocery list; offline edit → sync on two devices; share jointly → edit → see on the other device (ENGINEERING §15) | `app/integration_test/**` | All features | Runs in CI on web and one mobile target |
 
 ## 7. Beta readiness
@@ -367,7 +367,10 @@ Costs $25 once.
 | Sentry | Free Developer plan |
 | USDA, Open Food Facts | Free |
 
-## 9. Open questions
+## 9. Decisions made for this plan
 
-1. **Bundled USDA file:** commit the generated SQLite file (with Git LFS), or build it in CI and publish it as a release asset the app build downloads? Committing is simpler; building in CI keeps the repo small and the file reproducible. `USDA-1` needs the answer before it merges.
-2. **Mobile build tooling:** fastlane in GitHub Actions (free, more setup) or a hosted Flutter CI such as Codemagic (less setup, paid beyond its free minutes)? Decide before `REL-1`.
+Decided by Tyler on 2026-11-13.
+
+1. **Bundled USDA file:** the generated SQLite file is committed to the repo as a normal file, without Git LFS. It is a few MB and USDA updates it about twice a year, so the history grows slowly. Git LFS has a small free quota that every CI checkout uses, and building the file in CI would download hundreds of MB of CSVs on every build.
+2. **Release builds:** fastlane, run on GitHub Actions. The repo is public, so Actions minutes (including macOS) are free, and releases run alongside CI. iOS signing uses the App Store Connect API key from §8.2.
+3. **Firebase:** one project, with no dev and prod split (§8.1).
