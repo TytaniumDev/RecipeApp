@@ -68,7 +68,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - package: apps/recipe_app
+          - package: apps/sousline
             min_coverage: 70
           - package: packages/data
             min_coverage: 90
@@ -106,7 +106,7 @@ jobs:
         run: flutter pub get
 
       - name: 🌐 Build
-        working-directory: apps/recipe_app
+        working-directory: apps/sousline
         run: flutter build web --release
 
   # The single required status check for branch protection. It passes only

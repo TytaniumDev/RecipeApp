@@ -1,5 +1,5 @@
 /// Entities, value objects, repository interfaces and pure logic for
-/// Recipe App.
+/// Sousline.
 library;
 
 export 'src/entities/experiment.dart';

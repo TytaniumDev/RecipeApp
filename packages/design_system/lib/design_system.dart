@@ -1,4 +1,4 @@
-/// Recipe App's design tokens, theme, and shared widgets
+/// Sousline's design tokens, theme, and shared widgets
 /// (docs/DESIGN_SYSTEM.md).
 library;
 

@@ -1,6 +1,6 @@
 name: design_system
 description: >-
-  Recipe App's design tokens, theme, and shared widgets. Depends only on
+  Sousline's design tokens, theme, and shared widgets. Depends only on
   Flutter and its own fonts, never on domain, Riverpod, or a feature.
 version: 0.1.0
 publish_to: none

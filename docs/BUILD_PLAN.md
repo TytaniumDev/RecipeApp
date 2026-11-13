@@ -1,4 +1,4 @@
-# Recipe App: Build Plan
+# Sousline: Build Plan
 
 | | |
 |---|---|
@@ -23,7 +23,7 @@ Every task starts after the **scaffold** (task `S0`, a short series of PRs built
 
 | Area | What the scaffold provides |
 |---|---|
-| Workspace | Pub workspace with `apps/recipe_app` and every package in ENGINEERING §4.2 (plus `tools/usda_builder`) as an empty shell. A shell joins the CI matrix in `.github/workflows/ci.yml` in the PR that adds its first tests; a CI check fails if a member has tests but no CI job |
+| Workspace | Pub workspace with `apps/sousline` and every package in ENGINEERING §4.2 (plus `tools/usda_builder`) as an empty shell. A shell joins the CI matrix in `.github/workflows/ci.yml` in the PR that adds its first tests; a CI check fails if a member has tests but no CI job |
 | CI | `very_good_workflows` jobs per package, format, analyze, tests, coverage gate, web build; required checks on `main` |
 | `packages/domain` | `freezed` entities for every ENGINEERING §7.1 entity (one file each under `lib/src/entities/`; steps are `RecipeStep` to avoid clashing with Flutter's `Step`, and ingredient groups are `IngredientSection`), value objects `Quantity` (exact rational), `Unit`, `SortKey` (fractional index), typed ids, and one minimal repository interface per aggregate (watch, get, save, delete) |
 | `packages/data` | Full Drift schema for all §7.1 tables including `change_log` and `sync_state`, one table file per aggregate under `lib/src/tables/`, and one empty DAO per aggregate already registered in `@DriftDatabase`. **No** repository implementations and **no** FTS5 yet |
@@ -32,7 +32,7 @@ Every task starts after the **scaffold** (task `S0`, a short series of PRs built
 | Shared app code | `AsyncValueView` in `lib/shared/widgets/`, `BuildCounter` and `pumpApp` in `test/helpers/`, one `lib/l10n/arb/app_en.arb` read through `context.l10n` |
 | Bootstrap | `bootstrap.dart` wiring `ErrorReporter` into Flutter's error hooks. Stub interfaces and providers for `ErrorReporter`, `AuthService`, `Entitlements`, and `NutritionApi` in `lib/app/services/`; one throwing provider per repository interface in `lib/app/providers/repositories.dart`; the database provider in `lib/app/providers/database.dart` |
 | Conventions | `CLAUDE.md` with coding rules (small widgets, Riverpod patterns, tests) |
-| App id | `dev.tytanium.recipeapp` (can change until the store records exist, see §8) |
+| App id | `dev.tytanium.sousline` (can change until the store records exist, see §8) |
 
 If any of this turns out to be missing when the scaffold merges, add a task for it to wave 1 before anything that depends on it.
 
@@ -59,8 +59,8 @@ Some files are touched by many tasks. Keep each change to them small, so conflic
 | `pubspec.lock` | Never hand-merge. After a rebase, run `flutter pub get` and commit the result |
 | Generated code (`*.g.dart`, `*.freezed.dart`, Drift schema snapshots) | Never hand-merge. After a rebase, rerun `build_runner` and commit the result |
 | `packages/design_system/lib/design_system.dart` | Append one `export` line per new widget |
-| `apps/recipe_app/lib/app/providers/repositories.dart` | A data task replaces only the body of its own repository's provider |
-| `apps/recipe_app/lib/l10n/arb/app_en.arb` | Add keys in your feature's block, prefixed with the feature name (`cooking_nextStep`). Never rename or remove another feature's keys |
+| `apps/sousline/lib/app/providers/repositories.dart` | A data task replaces only the body of its own repository's provider |
+| `apps/sousline/lib/l10n/arb/app_en.arb` | Add keys in your feature's block, prefixed with the feature name (`cooking_nextStep`). Never rename or remove another feature's keys |
 | `packages/domain` entities and interfaces | Additive changes only (new fields with defaults, new methods). Anything else is a separate small PR merged first, see §3.3 |
 
 ### 3.3 Changes to shared foundations
@@ -161,16 +161,16 @@ Waves are a guide to ordering, not phases of the product (the PRD ships everythi
 
 ## 6. Tasks
 
-Paths are relative to the repo root. `app/` means `apps/recipe_app/`. Every task also owns the tests for its paths.
+Paths are relative to the repo root. `app/` means `apps/sousline/`. Every task also owns the tests for its paths.
 
 ### 6.1 Foundations
 
 | ID | Task | Owns | Depends on | Done when |
 |---|---|---|---|---|
 | FND-1 | **Quantities and units.** Rational arithmetic on `Quantity`, unit aliases and families (US volume, metric volume, weight, count), conversion between US customary and metric, scaling by servings or multiplier, rounding to amounts people can measure (PRD 7.6) | `packages/domain/lib/src/value_objects/quantity.dart` and `unit.dart`, and a new `packages/domain/lib/src/units/` | S0 | ⅓ cup × 3 equals 1 cup exactly; conversion and rounding tables are unit-tested; 90% coverage |
-| BE-0 | **Firebase skeleton.** `functions/` TypeScript project, `firebase.json`, `firestore.rules` (deny all), `storage.rules` (deny all), emulator config using a `demo-recipeapp` project id (works with no real project), rules test harness, CI job that lints, builds, and runs function and rules tests against the emulators | `functions/**`, `firebase.json`, `.firebaserc`, `firestore.rules`, `firestore.indexes.json`, `storage.rules`, `.github/workflows/functions.yaml` | S0 | CI runs the emulators and a sample rules test passes; no real Firebase project needed |
+| BE-0 | **Firebase skeleton.** `functions/` TypeScript project, `firebase.json`, `firestore.rules` (deny all), `storage.rules` (deny all), emulator config using a `demo-sousline` project id (works with no real project), rules test harness, CI job that lints, builds, and runs function and rules tests against the emulators | `functions/**`, `firebase.json`, `.firebaserc`, `firestore.rules`, `firestore.indexes.json`, `storage.rules`, `.github/workflows/functions.yaml` | S0 | CI runs the emulators and a sample rules test passes; no real Firebase project needed |
 | SYN-1 | **Clock and merge core.** Hybrid logical clock, `Change` model (ENGINEERING §8.1), per-field last-writer-wins merge, tombstones, idempotent apply, and the "losing long text goes to history" rule as a pure function | `packages/sync/lib/src/core/` | S0 | Randomized multi-device tests show every replica converges; 90% coverage |
-| USDA-1 | **USDA builder.** CLI that turns the FoodData Central Foundation and SR Legacy CSV releases into the compact read-only SQLite file (foods, nutrients, portions), with a fixed schema version. The generated file is committed to the repo as a normal file, no Git LFS (§9.1) | `tools/usda_builder/**`, `apps/recipe_app/assets/nutrition/usda_foods.sqlite` | S0 | Running the CLI on the official release produces the file and it is committed; the file is only ever regenerated with the CLI, never edited by hand; schema documented in the tool's README; tests run on a small CSV fixture |
+| USDA-1 | **USDA builder.** CLI that turns the FoodData Central Foundation and SR Legacy CSV releases into the compact read-only SQLite file (foods, nutrients, portions), with a fixed schema version. The generated file is committed to the repo as a normal file, no Git LFS (§9.1) | `tools/usda_builder/**`, `apps/sousline/assets/nutrition/usda_foods.sqlite` | S0 | Running the CLI on the official release produces the file and it is committed; the file is only ever regenerated with the CLI, never edited by hand; schema documented in the tool's README; tests run on a small CSV fixture |
 | OBS-1 | **Crash reporting.** Sentry implementation of the scaffold's `ErrorReporter`, reading the DSN from a `--dart-define`, off when no DSN is set. Debug-symbol and source-map upload left to `REL-1` | `app/lib/app/services/error_reporter.dart` (replaces the stub), `app/lib/bootstrap.dart` (Sentry init only) | S0 | Errors reach Sentry when a DSN is given; the app runs with none; tests use a fake reporter |
 
 ### 6.2 Design system components
@@ -233,7 +233,7 @@ Each feature task owns `app/lib/features/<name>/**` and `app/test/features/<name
 | APP-EXP | `experiments` | Start, edit, record what changed and how it went, promote or keep, history timeline, view and restore past versions (7.11) | DATA-5 |
 | APP-SET | `settings` | Theme mode, units, my measuring tools, about and licenses including Open Food Facts attribution (7.5, 7.6) | DATA-6 |
 | APP-ACC | `account`, plus `app/lib/app/services/auth_service.dart` | Optional sign-in with Google or Apple replacing the `AuthService` stub, attaching existing local data on first sign-in, sign-out (7.9) | Auth emulator for tests; §8.1 to §8.4 for real devices |
-| APP-SYN | `account/sync/` (subfolder) | Choose Drive or Recipe App cloud, switch between them, sync status in the shell via `SyncStatusIcon` (7.8) | APP-ACC, SYN-4, SYN-5 |
+| APP-SYN | `account/sync/` (subfolder) | Choose Drive or Sousline cloud, switch between them, sync status in the shell via `SyncStatusIcon` (7.8) | APP-ACC, SYN-4, SYN-5 |
 | APP-SHR | `sharing` | Share jointly or send a copy, recipient sees which, leave a joint share, view-only links, experiment "Share with others" toggle (7.10, 7.11) | SHR-1 |
 | PRO-1 | `account/pro/` (subfolder), `app/lib/app/services/entitlements.dart`, `functions/src/revenuecat_webhook/` | Paywall, RevenueCat SDK, `Entitlements` implementation replacing the scaffold stub, webhook that writes the entitlement to Firestore (7.12) | BE-0; §8.7 for real purchases |
 
@@ -253,7 +253,7 @@ Each feature task owns `app/lib/features/<name>/**` and `app/test/features/<name
 
 | ID | Task | Owns | Depends on | Done when |
 |---|---|---|---|---|
-| REL-1 | **Release pipeline.** Signed iOS and Android builds, TestFlight and Play internal testing uploads, Firebase Hosting deploy for web, Sentry symbol and source-map upload. Uses the single Firebase project (§8.1) and fastlane on GitHub Actions (§9.2) | `.github/workflows/release*.yaml`, `apps/recipe_app/ios/fastlane/`, `apps/recipe_app/android/fastlane/`, `apps/recipe_app/Gemfile` | §8 accounts, OBS-1 | A tagged commit produces builds testers can install |
+| REL-1 | **Release pipeline.** Signed iOS and Android builds, TestFlight and Play internal testing uploads, Firebase Hosting deploy for web, Sentry symbol and source-map upload. Uses the single Firebase project (§8.1) and fastlane on GitHub Actions (§9.2) | `.github/workflows/release*.yaml`, `apps/sousline/ios/fastlane/`, `apps/sousline/android/fastlane/`, `apps/sousline/Gemfile` | §8 accounts, OBS-1 | A tagged commit produces builds testers can install |
 | E2E-1 | **Integration tests.** Import → edit → cook → grocery list; offline edit → sync on two devices; share jointly → edit → see on the other device (ENGINEERING §15) | `app/integration_test/**` | All features | Runs in CI on web and one mobile target |
 
 ## 7. Beta readiness
@@ -274,7 +274,7 @@ The order below is the order to do them in, because later items depend on earlie
 
 ### 8.0 Decide first
 
-- [ ] **App id.** The scaffold uses `dev.tytanium.recipeapp`. It becomes permanent once the App Store and Play records exist. Change it now if the final app name should be in it; otherwise keep it, since the id is never shown to users.
+- [ ] **App id.** The scaffold uses `dev.tytanium.sousline`. It becomes permanent once the App Store and Play records exist. Change it now if the final app name should be in it; otherwise keep it, since the id is never shown to users.
 - [ ] **Contact email** for the stores, the OAuth consent screen, and the Open Food Facts `User-Agent`. A dedicated address is better than a personal one.
 - [ ] **Privacy policy URL.** Needed by both stores and the OAuth consent screen. A page on Firebase Hosting works.
 
@@ -330,7 +330,7 @@ Costs $25 once.
 ### 8.6 Nutrition data (needed by `BE-2`, `NUT-3`)
 
 - [ ] **USDA FoodData Central API key:** sign up at [fdc.nal.usda.gov/api-key-signup](https://fdc.nal.usda.gov/api-key-signup.html) (it is an api.data.gov key, free; the default limit is 1,000 requests an hour, which the proxy's cache keeps us under). Store it as a function secret: `firebase functions:secrets:set USDA_API_KEY`.
-- [ ] **Open Food Facts:** no account or key. Their API asks apps to send a `User-Agent` such as `RecipeApp/1.0 (contact@example.com)`, using the contact email from §8.0.
+- [ ] **Open Food Facts:** no account or key. Their API asks apps to send a `User-Agent` such as `Sousline/1.0 (<contact email>)`, using the contact email from §8.0.
 
 ### 8.7 RevenueCat and Stripe (needed by `PRO-1`)
 
