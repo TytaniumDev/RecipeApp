@@ -1,0 +1,17 @@
+name: domain
+description: >-
+  Entities, value objects, repository interfaces and pure logic for Recipe App.
+  Depends on nothing else in the repo, and never on Flutter, Drift or Firebase.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.14.0
+
+dependencies:
+  meta: ^1.17.0
+
+dev_dependencies:
+  test: ^1.33.0
+  very_good_analysis: ^11.0.0

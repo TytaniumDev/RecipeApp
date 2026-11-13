@@ -1,0 +1,17 @@
+# Dart and Flutter
+.dart_tool/
+.packages
+build/
+coverage/
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec_overrides.yaml
+*.iml
+.idea/
+.vscode/*
+!.vscode/settings.json
+.fvm/flutter_sdk
+.fvm/
+
+# OS
+.DS_Store
