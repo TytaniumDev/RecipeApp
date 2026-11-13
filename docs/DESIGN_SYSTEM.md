@@ -47,7 +47,7 @@ Decisions are marked the same way as in the engineering doc:
 | Cooking mode text | Large and fixed (no in-mode size control), still scaled by the system text size | Decided |
 | Code | Built in the app scaffold PR, where CI arrives | Decided |
 | Color generation | Material color utilities, from our own palettes, committed as constants | Default |
-| Macro colors | Blue protein, amber carbs, plum fat (from the Okabe–Ito color-blind-safe set) | Default |
+| Macro colors | Reddish-brown protein, amber carbs, blue fat | Decided |
 | Fonts | Fraunces and Inter (both SIL Open Font License) | Default |
 
 A visual companion with live previews of these tokens and components lives in the Claude Design System library: [Recipe App](https://claude.ai/artifact/Dr7eWvdaMkQAAs1KN6Amqv) (private to Tyler unless shared). This file is the source of truth. If the two disagree, this file wins and the companion gets updated.
@@ -113,21 +113,21 @@ Values are hex. Use the role, never the hex, in code. Names are written in kebab
 
 Material has no roles for macros or warnings, so we add them through an `AppColors` theme extension, following Material's custom-color pattern (a color, a container, and an on-container).
 
-**Macros.** Protein, carbs, and fat each have a fixed color, the same on every screen, so people learn them. The hues come from the Okabe–Ito color-blind-safe set, kept away from the brand's green and terracotta. They're never the only signal: a macro mark always has its name or initial next to it (P, C, F).
+**Macros.** Protein, carbs, and fat each have a fixed color, the same on every screen, so people learn them. Protein is a reddish brown (HCT hue 28, chroma 30), carbs an amber (hue 78), and fat a blue (hue 249). Protein is kept browner and less saturated than the terracotta accent so the two don't read as the same color. They're never the only signal: a macro mark always has its name or initial next to it (P, C, F).
 
 **Warning.** For things that need attention but aren't errors, such as an ingredient that couldn't be matched to nutrition data or a partial import. Always paired with an icon and words.
 
 | Role | Light | Dark | Cooking light | Cooking dark | Use |
 |---|---|---|---|---|---|
-| `protein` | `#00639b` | `#97cbff` | `#003e65` | `#cee5ff` | Protein marks (macro bar segment, dot) and protein numbers as text, on surface and surface-container levels. |
-| `protein-container` | `#cee5ff` | `#004a76` | `#cee5ff` | `#003353` | Soft protein fill behind a protein label or chip. |
-| `on-protein-container` | `#004a76` | `#cee5ff` | `#001d33` | `#e8f2ff` | Text on protein-container. |
+| `protein` | `#894e45` | `#ffb4a7` | `#5f2d24` | `#ffdad4` | Protein marks (macro bar segment, dot) and protein numbers as text, on surface and surface-container levels. |
+| `protein-container` | `#ffdad4` | `#6d382f` | `#ffdad4` | `#51221a` | Soft protein fill behind a protein label or chip. |
+| `on-protein-container` | `#6d382f` | `#ffdad4` | `#370e08` | `#ffedea` | Text on protein-container. |
 | `carbs` | `#7f5600` | `#ffba3e` | `#513600` | `#ffdeae` | Carbohydrate marks and numbers, on surface and surface-container levels. |
 | `carbs-container` | `#ffdeae` | `#604100` | `#ffdeae` | `#432c00` | Soft carbs fill behind a carbs label or chip. |
 | `on-carbs-container` | `#604100` | `#ffdeae` | `#281900` | `#ffeeda` | Text on carbs-container. |
-| `fat` | `#934172` | `#ffaed9` | `#681d4e` | `#ffd8e9` | Fat marks and numbers, on surface and surface-container levels. |
-| `fat-container` | `#ffd8e9` | `#77295a` | `#ffd8e9` | `#5b1142` | Soft fat fill behind a fat label or chip. |
-| `on-fat-container` | `#77295a` | `#ffd8e9` | `#3c002a` | `#ffecf3` | Text on fat-container. |
+| `fat` | `#00639b` | `#97cbff` | `#003e65` | `#cee5ff` | Fat marks and numbers, on surface and surface-container levels. |
+| `fat-container` | `#cee5ff` | `#004a76` | `#cee5ff` | `#003353` | Soft fat fill behind a fat label or chip. |
+| `on-fat-container` | `#004a76` | `#cee5ff` | `#001d33` | `#e8f2ff` | Text on fat-container. |
 | `warning` | `#8d4f00` | `#ffb875` | `#5b3100` | `#ffdcc0` | Needs attention but is not an error: unmatched ingredients, partial imports. Always with an icon and words. |
 | `warning-container` | `#ffdcc0` | `#6b3b00` | `#ffdcc0` | `#4b2800` | Background of warning chips and banners. |
 | `on-warning-container` | `#6b3b00` | `#ffdcc0` | `#2d1600` | `#ffeee1` | Text and icons on warning-container. |
