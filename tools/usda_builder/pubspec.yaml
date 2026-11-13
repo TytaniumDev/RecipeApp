@@ -1,0 +1,14 @@
+name: usda_builder
+description: >-
+  Command-line tool that turns the USDA FoodData Central CSV release into the
+  bundled, read-only SQLite file. ENGINEERING.md §11.1.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.14.0
+
+dev_dependencies:
+  test: ^1.33.0
+  very_good_analysis: ^11.0.0

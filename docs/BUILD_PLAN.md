@@ -23,9 +23,9 @@ Every task starts after the **scaffold** (task `S0`, a short series of PRs built
 
 | Area | What the scaffold provides |
 |---|---|
-| Workspace | Pub workspace with `apps/recipe_app` and every package in ENGINEERING §4.2 as an empty shell, wired into CI |
+| Workspace | Pub workspace with `apps/recipe_app` and every package in ENGINEERING §4.2 (plus `tools/usda_builder`) as an empty shell. A shell joins the CI matrix in `.github/workflows/ci.yml` in the PR that adds its first tests; a CI check fails if a member has tests but no CI job |
 | CI | `very_good_workflows` jobs per package, format, analyze, tests, coverage gate, web build; required checks on `main` |
-| `packages/domain` | `freezed` entities for every ENGINEERING §7.1 entity (one file each under `lib/src/entities/`), value objects `Quantity` (exact rational), `Unit`, `SortKey` (fractional index), typed ids, and one minimal repository interface per aggregate (watch, get, save, delete) |
+| `packages/domain` | `freezed` entities for every ENGINEERING §7.1 entity (one file each under `lib/src/entities/`; steps are `RecipeStep` to avoid clashing with Flutter's `Step`, and ingredient groups are `IngredientSection`), value objects `Quantity` (exact rational), `Unit`, `SortKey` (fractional index), typed ids, and one minimal repository interface per aggregate (watch, get, save, delete) |
 | `packages/data` | Full Drift schema for all §7.1 tables including `change_log` and `sync_state`, one table file per aggregate under `lib/src/tables/`, and one empty DAO per aggregate already registered in `@DriftDatabase`. **No** repository implementations and **no** FTS5 yet |
 | `packages/design_system` | Tokens and theme (DESIGN_SYSTEM §13.1 `tokens/` and `theme/`). **No** §9.2 components yet |
 | App shell | `lib/app/router.dart` composes `lib/features/<name>/<name>_routes.dart` with a placeholder screen per feature; shell with Library, Grocery list, and Settings tabs |
@@ -55,6 +55,7 @@ Some files are touched by many tasks. Keep each change to them small, so conflic
 | File | Rule |
 |---|---|
 | `packages/*/pubspec.yaml` | Add only the dependencies your task needs, in alphabetical order. Versions come from the root constraints if the scaffold set them |
+| `.github/workflows/ci.yml` | Add one matrix entry (`package:` and `min_coverage:`) when your package gets its first tests |
 | `pubspec.lock` | Never hand-merge. After a rebase, run `flutter pub get` and commit the result |
 | Generated code (`*.g.dart`, `*.freezed.dart`, Drift schema snapshots) | Never hand-merge. After a rebase, rerun `build_runner` and commit the result |
 | `packages/design_system/lib/design_system.dart` | Append one `export` line per new widget |

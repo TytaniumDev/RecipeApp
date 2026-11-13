@@ -1,0 +1,16 @@
+name: measuring
+description: >-
+  Measuring-tool decomposition, amount formatting, and smart step text. ENGINEERING.md §13.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.14.0
+
+dependencies:
+  domain: any
+
+dev_dependencies:
+  test: ^1.33.0
+  very_good_analysis: ^11.0.0

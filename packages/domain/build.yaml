@@ -1,0 +1,9 @@
+targets:
+  $default:
+    builders:
+      freezed:
+        options:
+          # Entities are built in code and in tests; JSON is added per entity
+          # only when something needs it (sync encodes fields one by one).
+          to_json: false
+          from_json: false

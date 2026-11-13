@@ -1,0 +1,16 @@
+name: sync
+description: >-
+  Change log, hybrid logical clock, per-field merge, and sync transports (Google Drive, Firestore). ENGINEERING.md §8.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.14.0
+
+dependencies:
+  domain: any
+
+dev_dependencies:
+  test: ^1.33.0
+  very_good_analysis: ^11.0.0
