@@ -6,6 +6,7 @@ environment:
   sdk: ^3.14.0
 
 workspace:
+  - apps/recipe_app
   - packages/data
   - packages/design_system
   - packages/domain
