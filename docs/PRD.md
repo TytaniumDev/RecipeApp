@@ -185,6 +185,7 @@ The app launches as one complete release. Every feature in 7.1 to 7.11 is part o
 - **Signing in is optional.** The whole app works without an account on a single device. Sign-in is only needed for sync across devices and sharing.
 - Google Drive sync requires signing in with Google. Apple sign-in users sync through Sousline cloud sync. Signing in later brings everything the user already created into their account.
 - Sign in with **Google** or **Apple** only. The app does not manage its own usernames or passwords.
+- Users can **delete their account** from Settings. It removes the account and everything stored on Sousline's servers, keeps a local copy on the device, and leaves jointly shared recipes with the other people in the share. Both app stores require this.
 
 ### 7.10 Sharing
 - **Between app users:** Share a single recipe or a whole folder with another user. When sharing, the sharer chooses one of two methods:

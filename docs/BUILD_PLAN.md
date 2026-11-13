@@ -232,7 +232,7 @@ Each feature task owns `app/lib/features/<name>/**` and `app/test/features/<name
 | APP-GRO | `grocery` | Add to grocery list sheet with line-by-line include, several recipes per list, combined items by store section, check-off, manual items (7.7) | DS-3, GRO-1, DATA-4 |
 | APP-EXP | `experiments` | Start, edit, record what changed and how it went, promote or keep, history timeline, view and restore past versions (7.11) | DATA-5 |
 | APP-SET | `settings` | Theme mode, units, my measuring tools, about and licenses including Open Food Facts attribution (7.5, 7.6) | DATA-6 |
-| APP-ACC | `account`, plus `app/lib/app/services/auth_service.dart` | Optional sign-in with Google or Apple replacing the `AuthService` stub, attaching existing local data on first sign-in, sign-out (7.9) | Auth emulator for tests; §8.1 to §8.4 for real devices |
+| APP-ACC | `account`, plus `app/lib/app/services/auth_service.dart` | Optional sign-in with Google or Apple replacing the `AuthService` stub, attaching existing local data on first sign-in, sign-out (7.9), and **delete account**, which both stores require: a `delete_account` function (`functions/src/delete_account/`) deletes the Firebase user and their server data, and the device keeps a local copy | BE-0; Auth emulator for tests; §8.1 to §8.4 for real devices |
 | APP-SYN | `account/sync/` (subfolder) | Choose Drive or Sousline cloud, switch between them, sync status in the shell via `SyncStatusIcon` (7.8) | APP-ACC, SYN-4, SYN-5 |
 | APP-SHR | `sharing` | Share jointly or send a copy, recipient sees which, leave a joint share, view-only links, experiment "Share with others" toggle (7.10, 7.11) | SHR-1 |
 | PRO-1 | `account/pro/` (subfolder), `app/lib/app/services/entitlements.dart`, `functions/src/revenuecat_webhook/` | Paywall, RevenueCat SDK, `Entitlements` implementation replacing the scaffold stub, webhook that writes the entitlement to Firestore (7.12) | BE-0; §8.7 for real purchases |
@@ -275,8 +275,8 @@ The order below is the order to do them in, because later items depend on earlie
 ### 8.0 Decide first
 
 - [x] **App name and id.** The app is **Sousline** (Tyler, 2026-11-13), with app id `dev.tytanium.sousline` on iOS and Android. The id becomes permanent once the App Store and Play records exist.
-- [x] **Contact email** for the stores, the OAuth consent screen, and the Open Food Facts `User-Agent`: Tyler's developer address (2026-11-13). Agents get it from Tyler rather than from this public repo.
-- [ ] **Privacy policy URL.** Needed by both stores and the OAuth consent screen. A page on Firebase Hosting works.
+- [x] **Contact email** for the stores, the OAuth consent screen, and the Open Food Facts `User-Agent`: Tyler's developer address (2026-11-13), the one on the privacy policy page.
+- [x] **Privacy policy URL.** Needed by both stores and the OAuth consent screen: `https://sousline.web.app/privacy/`. The page is `apps/sousline/web/privacy/index.html`, so every web deploy (`REL-1`) publishes it with the app. Update it when a feature changes what data leaves the device.
 
 ### 8.1 Firebase (needed by `BE-*`, `SYN-5`, `SHR-1`, `APP-ACC`, `PRO-1`, `REL-1`)
 
@@ -306,9 +306,9 @@ Costs $99 a year. Enrollment can take a day or two, so start early.
 These live in the Google Cloud project that Firebase created.
 
 - [ ] Firebase Auth → Sign-in method → turn on **Google**.
-- [ ] Google Cloud console → **OAuth consent screen**: app name, support email, privacy policy URL, and the scopes `openid`, `email`, `profile`, and `drive.appdata`. Google lists `drive.appdata` among its recommended Drive scopes, so it should only need basic verification, but check how the console classifies it when you add it.
+- [ ] Google Cloud console → **OAuth consent screen**: app name, support email, privacy policy URL, and the scopes `openid`, `email`, `profile`, and `drive.appdata`. Done 2026-11-13 except **Branding** (home page and privacy policy links), which waits for the real website. Google lists `drive.appdata` among its recommended Drive scopes, so it should only need basic verification, but check how the console classifies it when you add it.
 - [ ] Move the consent screen from **Testing** to **In production** before the beta. In Testing mode Google expires sign-ins after 7 days, which would break Drive sync for testers every week.
-- [ ] Turn on the **Google Drive API** for the project.
+- [x] Turn on the **Google Drive API** for the project.
 - [ ] Add your Android **SHA-1 and SHA-256 fingerprints** to the Firebase Android app: the debug key, your upload key (§8.5), and the Play app signing key (shown in Play Console after the first upload). Google sign-in fails on Android without them.
 
 ### 8.4 Google Play Console (needed by Android builds, Play testing, Android purchases)
