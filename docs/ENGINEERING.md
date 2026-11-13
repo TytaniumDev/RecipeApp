@@ -46,7 +46,8 @@ Each decision is marked:
 | Code structure | Pub workspace: Flutter app plus pure-Dart core packages | Decided |
 | Testing | Unit (with fixtures), widget (with rebuild counts), golden, integration | Decided |
 | Lints | `very_good_analysis` | Decided |
-| CI | GitHub Actions, added with the app scaffold PR | Decided |
+| CI | GitHub Actions using `very_good_workflows`, added with the app scaffold PR | Decided |
+| Mocking | `mocktail` (no code generation) | Decided |
 | Routing | `go_router` | Default |
 | Immutable models | `freezed` + `json_serializable` | Default |
 | Subscriptions | RevenueCat (App Store, Play, web via Stripe) | Default |
@@ -292,7 +293,7 @@ Because both carry the same change log, **switching transports** means replaying
 
 | Level | What | Tools |
 |---|---|---|
-| Unit | Pure packages: parser corpus, importer fixtures (saved HTML pages), nutrition math, measuring, HLC and merge, use cases with fake repositories | `package:test` |
+| Unit | Pure packages: parser corpus, importer fixtures (saved HTML pages), nutrition math, measuring, HLC and merge, use cases with fake repositories | `package:test`, `mocktail` |
 | Sync | One shared contract suite run against both transports, plus randomized multi-device merge tests that check every device converges | `package:test`, Firestore emulator |
 | Widget | Behavior of each widget **and rebuild counts**, using the `BuildCounter` helper (§5) | `flutter_test` |
 | Golden | Design-system widgets and key screens, in light and dark themes | `alchemist` *(Default)* |
@@ -300,11 +301,15 @@ Because both carry the same change log, **switching transports** means replaying
 | Database | Drift migrations against generated schema snapshots | `drift_dev` |
 | Backend | Security rules and Cloud Functions | Firebase emulators |
 
+**Mocking** *(Decided)*: `mocktail` for mocks and stubs, since it needs no code generation. Prefer small hand-written fakes for repositories, and use `mocktail` for collaborators where a fake would be heavier than the test.
+
 ## 16. Code quality and CI
 
 - **Lints:** `very_good_analysis` in every package, with no per-file opt-outs without a comment explaining why. *(Decided)*
 - **Formatting:** `dart format`, checked in CI.
-- **CI** *(Decided)*: GitHub Actions, added in the app scaffold PR. Every PR runs format, analyze, code-generation freshness, tests for every package, and a web build. Mobile builds and Firebase Hosting preview deploys follow once the app runs.
+- **CI** *(Decided)*: GitHub Actions, added in the app scaffold PR, built on Very Good Ventures' reusable [`very_good_workflows`](https://github.com/VeryGoodOpenSource/very_good_workflows). Every package gets a job from their `dart_package` or `flutter_package` workflow (format, analyze, tests, and a coverage gate). Our own steps add code-generation freshness checks and a web build. Mobile builds and Firebase Hosting preview deploys follow once the app runs.
+- **Coverage gate** *(Default)*: 90% for the pure packages, where most logic lives, and 70% for the app, where goldens and integration tests carry part of the load. These numbers will be tuned in the scaffold PR.
+- **Not used:** the Very Good CLI starter template, because it is built around Bloc and we use Riverpod.
 - **Merging:** PRs merge automatically once CI is green.
 
 ## 17. Other defaults *(open to review)*
