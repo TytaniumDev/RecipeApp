@@ -6,6 +6,7 @@ environment:
   sdk: ^3.14.0
 
 workspace:
+  - packages/data
   - packages/domain
   - packages/ingredient_parser
   - packages/measuring

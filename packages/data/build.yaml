@@ -1,0 +1,11 @@
+targets:
+  $default:
+    builders:
+      drift_dev:
+        options:
+          # ISO 8601 text keeps the time zone and reads well in sync payloads.
+          store_date_time_values_as_text: true
+          databases:
+            app: lib/src/app_database.dart
+          schema_dir: drift_schemas/
+          test_dir: test/drift/
