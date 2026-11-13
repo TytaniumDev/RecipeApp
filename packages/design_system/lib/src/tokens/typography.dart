@@ -87,22 +87,43 @@ abstract final class AppTextTheme {
 /// Cooking styles come in a compact size and a `Large` size for medium and
 /// expanded windows.
 @immutable
-class AppTypography extends ThemeExtension<AppTypography> {
-  const new({
-    required this.numberHero,
-    required this.numberLarge,
-    required this.number,
-    required this.amount,
-    required this.cookingStep,
-    required this.cookingStepLarge,
-    required this.cookingAmount,
-    required this.cookingAmountLarge,
-    required this.cookingIngredient,
-    required this.cookingIngredientLarge,
-    required this.cookingSection,
-    required this.cookingTimer,
-  });
+class const AppTypography({
+  /// Calories per serving at the top of the nutrition card.
+  required final TextStyle numberHero,
 
+  /// Macro grams in the macro summary.
+  required final TextStyle numberLarge,
+
+  /// Values in nutrition tables, grocery quantities.
+  required final TextStyle number,
+
+  /// An amount inside running text. Inherits the surrounding size.
+  required final TextStyle amount,
+
+  /// Step text in cooking mode on compact windows.
+  required final TextStyle cookingStep,
+
+  /// Step text in cooking mode on medium and expanded windows.
+  required final TextStyle cookingStepLarge,
+
+  /// Amounts inside cooking steps on compact windows.
+  required final TextStyle cookingAmount,
+
+  /// Amounts inside cooking steps on medium and expanded windows.
+  required final TextStyle cookingAmountLarge,
+
+  /// The ingredients-for-this-step panel on compact windows.
+  required final TextStyle cookingIngredient,
+
+  /// The ingredients-for-this-step panel on medium and expanded windows.
+  required final TextStyle cookingIngredientLarge,
+
+  /// Section name and step count ("Prep · Step 2 of 5").
+  required final TextStyle cookingSection,
+
+  /// Timer countdowns.
+  required final TextStyle cookingTimer,
+}) extends ThemeExtension<AppTypography> {
   /// The same styles for every scheme. Colors come from the widget.
   static final AppTypography standard = AppTypography(
     numberHero: _sans(600, 32, 40, tabular: true),
@@ -118,42 +139,6 @@ class AppTypography extends ThemeExtension<AppTypography> {
     cookingSection: _sans(600, 18, 24),
     cookingTimer: _sans(600, 40, 48, tabular: true),
   );
-
-  /// Calories per serving at the top of the nutrition card.
-  final TextStyle numberHero;
-
-  /// Macro grams in the macro summary.
-  final TextStyle numberLarge;
-
-  /// Values in nutrition tables, grocery quantities.
-  final TextStyle number;
-
-  /// An amount inside running text. Inherits the surrounding size.
-  final TextStyle amount;
-
-  /// Step text in cooking mode on compact windows.
-  final TextStyle cookingStep;
-
-  /// Step text in cooking mode on medium and expanded windows.
-  final TextStyle cookingStepLarge;
-
-  /// Amounts inside cooking steps on compact windows.
-  final TextStyle cookingAmount;
-
-  /// Amounts inside cooking steps on medium and expanded windows.
-  final TextStyle cookingAmountLarge;
-
-  /// The ingredients-for-this-step panel on compact windows.
-  final TextStyle cookingIngredient;
-
-  /// The ingredients-for-this-step panel on medium and expanded windows.
-  final TextStyle cookingIngredientLarge;
-
-  /// Section name and step count ("Prep · Step 2 of 5").
-  final TextStyle cookingSection;
-
-  /// Timer countdowns.
-  final TextStyle cookingTimer;
 
   static TextStyle _sans(
     int weight,

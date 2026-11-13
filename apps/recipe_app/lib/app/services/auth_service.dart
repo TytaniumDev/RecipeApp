@@ -5,13 +5,11 @@ part 'auth_service.g.dart';
 
 /// A signed-in user. Signing in is optional (ENGINEERING.md §10).
 @immutable
-class AuthUser {
-  const new({required this.id, this.displayName, this.email});
-
-  final String id;
-  final String? displayName;
-  final String? email;
-
+class const AuthUser({
+  required final String id,
+  final String? displayName,
+  final String? email,
+}) {
   @override
   bool operator ==(Object other) =>
       other is AuthUser &&
@@ -38,9 +36,7 @@ abstract interface class AuthService {
 }
 
 /// Always signed out. Sign-in reports that it is not available yet.
-class SignedOutAuthService implements AuthService {
-  const new();
-
+class const SignedOutAuthService() implements AuthService {
   @override
   Stream<AuthUser?> watchUser() => Stream.value(null);
 

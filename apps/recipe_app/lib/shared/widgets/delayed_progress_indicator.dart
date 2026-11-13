@@ -4,11 +4,10 @@ import 'package:material_ui/material_ui.dart';
 
 /// A progress indicator that appears only after [delay], so fast loads
 /// don't flash a spinner (DESIGN_SYSTEM.md §10.8).
-class DelayedProgressIndicator extends StatefulWidget {
-  const new({super.key, this.delay = const Duration(milliseconds: 300)});
-
-  final Duration delay;
-
+class const DelayedProgressIndicator({
+  super.key,
+  final Duration delay = const Duration(milliseconds: 300),
+}) extends StatefulWidget {
   @override
   State<DelayedProgressIndicator> createState() =>
       _DelayedProgressIndicatorState();

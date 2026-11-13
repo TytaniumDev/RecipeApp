@@ -21,9 +21,7 @@ abstract interface class NutritionApi {
 }
 
 /// Finds nothing, as if offline. Bundled generic foods still work.
-class OfflineNutritionApi implements NutritionApi {
-  const new();
-
+class const OfflineNutritionApi() implements NutritionApi {
   @override
   Future<List<OnlineFood>> search(String query) async => const [];
 

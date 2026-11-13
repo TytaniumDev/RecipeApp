@@ -6,7 +6,13 @@ import 'package:meta/meta.dart';
 /// exactly 1 cup (ENGINEERING.md §7). A [Quantity] is always normalized:
 /// the fraction is fully reduced and the [denominator] is positive.
 @immutable
-final class Quantity implements Comparable<Quantity> {
+final class const Quantity._(
+  /// The numerator of the reduced fraction. Carries the sign.
+  final int numerator,
+
+  /// The denominator of the reduced fraction. Always positive.
+  final int denominator,
+) implements Comparable<Quantity> {
   /// Creates `numerator / denominator`, reduced to lowest terms.
   ///
   /// Throws an [ArgumentError] when [denominator] is zero.
@@ -23,19 +29,11 @@ final class Quantity implements Comparable<Quantity> {
     );
   }
 
-  const new _(this.numerator, this.denominator);
-
   /// Zero.
   static const zero = Quantity._(0, 1);
 
   /// One.
   static const one = Quantity._(1, 1);
-
-  /// The numerator of the reduced fraction. Carries the sign.
-  final int numerator;
-
-  /// The denominator of the reduced fraction. Always positive.
-  final int denominator;
 
   /// Whether this is a whole number, such as 2.
   bool get isWhole => denominator == 1;

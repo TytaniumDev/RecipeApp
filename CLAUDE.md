@@ -46,7 +46,16 @@ very_good test --coverage --min-coverage 90 \
 
 - Lints are `very_good_analysis`. No `// ignore:` without a comment saying why.
 - Use only current, non-deprecated APIs. ENGINEERING.md §16.1 is the baseline (Flutter 3.50, Dart 3.14).
-- Concise constructor syntax is enforced: `factory(...)`, `const new _(...)`, `const factory({...}) = _Foo;`. Run `dart fix --apply` in the package after writing code. Don't use primary constructors yet (§16.1).
+- **Primary constructors** when a class's fields come straight from its parameters: widgets, value classes, enums with fields, DAOs. Put each field's doc comment on its parameter.
+  ```dart
+  class const RecipeTitle({
+    /// The recipe whose title this shows.
+    required final RecipeId recipeId,
+    super.key,
+  }) extends ConsumerWidget {
+  ```
+  A class with no constructor (static-only, interface, Drift table, plain enum) gets no empty `()`. A class whose constructor computes a field (`SpringCurve`) or that has several generative constructors keeps a body constructor. The IDE's "Convert to primary constructor" does the conversion. ENGINEERING.md §16.1.
+- Body constructors use the concise syntax, which the lints enforce: `factory(...)`, `const new _(...)`, `const factory({...}) = _Foo;`. Run `dart fix --apply` in the package after writing code.
 - Dot shorthands for enum values and static members when the context gives the type: `themeMode: .system`, `brightness == .light`. Keep the type name inside `expect(...)` and annotations.
 - Import Material from `package:material_ui/material_ui.dart` (Cupertino from `package:cupertino_ui/cupertino_ui.dart`), never `package:flutter/material.dart` or `cupertino.dart` (deprecated since Flutter 3.47). `dart fix --apply --code=migrate_design_widgets` converts old code.
 - Localization delegates: `[AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates]` from `material_ui`. Never import `flutter_localizations`; only the generated l10n file uses it.

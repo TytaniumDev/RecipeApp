@@ -13,26 +13,19 @@ import 'package:recipe_app/shared/widgets/delayed_progress_indicator.dart';
 ///   data: (title) => Text(title),
 /// )
 /// ```
-class AsyncValueView<T> extends StatelessWidget {
-  const new({
-    required this.value,
-    required this.data,
-    this.loading,
-    this.error,
-    super.key,
-  });
-
-  final AsyncValue<T> value;
+class const AsyncValueView<T>({
+  required final AsyncValue<T> value,
 
   /// Builds the loaded state.
-  final Widget Function(T data) data;
+  required final Widget Function(T data) data,
 
   /// Replaces the default delayed progress indicator.
-  final Widget Function()? loading;
+  final Widget Function()? loading,
 
   /// Replaces the default error message.
-  final Widget Function(Object error, StackTrace stackTrace)? error;
-
+  final Widget Function(Object error, StackTrace stackTrace)? error,
+  super.key,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) => value.when(
     data: data,
@@ -41,9 +34,7 @@ class AsyncValueView<T> extends StatelessWidget {
   );
 }
 
-class _ErrorMessage extends StatelessWidget {
-  const new();
-
+class const _ErrorMessage() extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       Center(child: Text(context.l10n.common_errorGeneric));

@@ -9,7 +9,6 @@ part 'measuring_tool_dao.g.dart';
 /// Empty in the scaffold. The data task for this aggregate adds its queries
 /// (docs/BUILD_PLAN.md).
 @DriftAccessor(tables: [MeasuringTools])
-class MeasuringToolDao extends DatabaseAccessor<AppDatabase>
-    with _$MeasuringToolDaoMixin {
-  new(super.attachedDatabase);
-}
+class MeasuringToolDao(super.attachedDatabase)
+    extends DatabaseAccessor<AppDatabase>
+    with _$MeasuringToolDaoMixin;

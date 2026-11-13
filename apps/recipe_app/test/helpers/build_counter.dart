@@ -19,9 +19,7 @@ import 'package:flutter_test/flutter_test.dart';
 /// Counts every build of a widget's element, whether it rebuilt because its
 /// own state changed or because its parent rebuilt it. Stops counting when
 /// the test ends.
-class BuildCounter {
-  new _();
-
+class BuildCounter._() {
   /// Starts counting builds until the end of the current test.
   factory start() {
     final counter = BuildCounter._();

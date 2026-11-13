@@ -3,9 +3,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'helpers.dart';
 
-class _Counter extends StatefulWidget {
-  const new();
-
+class const _Counter() extends StatefulWidget {
   @override
   State<_Counter> createState() => _CounterState();
 }
@@ -25,18 +23,13 @@ class _CounterState extends State<_Counter> {
   );
 }
 
-class _Label extends StatelessWidget {
-  const new({required this.count, super.key});
-
-  final int count;
-
+class const _Label({required final int count, super.key})
+    extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Text('$count');
 }
 
-class _Static extends StatelessWidget {
-  const new();
-
+class const _Static() extends StatelessWidget {
   @override
   Widget build(BuildContext context) => const Text('static');
 }

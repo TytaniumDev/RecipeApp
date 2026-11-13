@@ -9,6 +9,6 @@ part 'history_dao.g.dart';
 /// Empty in the scaffold. The data task for this aggregate adds its queries
 /// (docs/BUILD_PLAN.md).
 @DriftAccessor(tables: [RecipeVersions, Experiments])
-class HistoryDao extends DatabaseAccessor<AppDatabase> with _$HistoryDaoMixin {
-  new(super.attachedDatabase);
-}
+class HistoryDao(super.attachedDatabase)
+    extends DatabaseAccessor<AppDatabase>
+    with _$HistoryDaoMixin;

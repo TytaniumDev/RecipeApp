@@ -10,9 +10,7 @@ abstract interface class Entitlements {
 }
 
 /// Never Pro.
-class FreeEntitlements implements Entitlements {
-  const new();
-
+class const FreeEntitlements() implements Entitlements {
   @override
   Stream<bool> watchIsPro() => Stream.value(false);
 }
