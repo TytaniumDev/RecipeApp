@@ -38,7 +38,7 @@ Decisions are marked the same way as in the engineering doc:
 | Brand color | Herb green primary, terracotta warm accent | Decided |
 | Dynamic color (Material You) | Off. Always our colors | Decided |
 | Light and dark | Both. Follow the system, with a Light / Dark / System setting | Decided |
-| Typography | Serif for recipe names and headings (Fraunces), sans for everything else (Inter), both bundled | Decided |
+| Typography | Serif for recipe names and headings (Newsreader), sans for everything else (Plus Jakarta Sans), both bundled | Decided |
 | Density | Comfortable by default, compact for nutrition tables and long read-only lists | Decided |
 | Icons | Material Symbols Rounded | Decided |
 | Motion | Expressive: spring-based, with a little bounce on movement | Decided |
@@ -48,7 +48,6 @@ Decisions are marked the same way as in the engineering doc:
 | Code | Built in the app scaffold PR, where CI arrives | Decided |
 | Color generation | Material color utilities, from our own palettes, committed as constants | Default |
 | Macro colors | Reddish-brown protein, amber carbs, blue fat | Decided |
-| Fonts | Fraunces and Inter (both SIL Open Font License) | Default |
 
 A visual companion with live previews of these tokens and components lives in the Claude Design System library: [Recipe App](https://claude.ai/artifact/Dr7eWvdaMkQAAs1KN6Amqv) (private to Tyler unless shared). This file is the source of truth. If the two disagree, this file wins and the companion gets updated.
 
@@ -143,12 +142,12 @@ Material has no roles for macros or warnings, so we add them through an `AppColo
 
 ## 5. Typography
 
-### 5.1 Typefaces *(Decided: serif titles, sans body. Default: the specific faces)*
+### 5.1 Typefaces *(Decided)*
 
 | Family | Used for | Why |
 |---|---|---|
-| **Fraunces** (variable, `SOFT` 50, `WONK` 0, optical size automatic) | Display, headline, and `titleLarge`: recipe names, screen titles, section titles | A warm "old-style" serif with soft terminals. The optical-size axis keeps it crisp from 22 to 57 px. |
-| **Inter** (variable) | Everything else: body, labels, buttons, numbers, cooking steps | Very readable at small and very large sizes, has tabular figures for nutrition tables, and has all the fraction glyphs recipes need (½ ⅓ ⅔ ¼ ¾ ⅛ ⅜ ⅝ ⅞). |
+| **Newsreader** (variable, weight and optical size; optical size automatic) | Display, headline, and `titleLarge`: recipe names, screen titles, section titles | An editorial serif that reads like a good food magazine: calm and refined. The optical-size axis keeps it crisp from 22 to 57 px. |
+| **Plus Jakarta Sans** (variable, weight) | Everything else: body, labels, buttons, numbers, cooking steps | A friendly, slightly rounded geometric sans with clear, open numbers. It has tabular figures for nutrition tables and all the fraction glyphs recipes need (½ ⅓ ⅔ ¼ ¾ ⅛ ⅜ ⅝ ⅞). |
 
 Both fonts are **bundled** in `packages/design_system` as assets, not fetched at runtime, so the app looks the same offline and on first launch. Both are licensed under the SIL Open Font License.
 
@@ -158,25 +157,25 @@ We keep Material 3's type roles and sizes, so every Material widget picks up the
 
 | Role | Family | Size / line height | Weight | Used for |
 |---|---|---|---|---|
-| `displayLarge` | Fraunces | 57 / 64 | 500 | Rare: onboarding hero |
-| `displayMedium` | Fraunces | 45 / 52 | 500 | Rare |
-| `displaySmall` | Fraunces | 36 / 44 | 500 | Recipe name on a tablet or web detail page |
-| `headlineLarge` | Fraunces | 32 / 40 | 600 | Recipe name on the phone detail page |
-| `headlineMedium` | Fraunces | 28 / 36 | 600 | Screen titles (Library, Grocery list) |
-| `headlineSmall` | Fraunces | 24 / 32 | 600 | Dialog titles, empty-state titles |
-| `titleLarge` | Fraunces | 22 / 28 | 600 | Section titles (Ingredients, Steps, Nutrition), recipe names on cards |
-| `titleMedium` | Inter | 16 / 24 | 600 | List item titles, step section names in the editor |
-| `titleSmall` | Inter | 14 / 20 | 600 | Small headers, table headers |
-| `bodyLarge` | Inter | 16 / 24 | 400 | Ingredient lines, step text, notes |
-| `bodyMedium` | Inter | 14 / 20 | 400 | Default body text |
-| `bodySmall` | Inter | 12 / 16 | 400 | Metadata (source, times), helper text |
-| `labelLarge` | Inter | 14 / 20 | 600 | Buttons, tabs |
-| `labelMedium` | Inter | 12 / 16 | 600 | Chips, badges |
-| `labelSmall` | Inter | 11 / 16 | 600 | Nav bar labels, tiny counts |
+| `displayLarge` | Newsreader | 57 / 64 | 500 | Rare: onboarding hero |
+| `displayMedium` | Newsreader | 45 / 52 | 500 | Rare |
+| `displaySmall` | Newsreader | 36 / 44 | 500 | Recipe name on a tablet or web detail page |
+| `headlineLarge` | Newsreader | 32 / 40 | 600 | Recipe name on the phone detail page |
+| `headlineMedium` | Newsreader | 28 / 36 | 600 | Screen titles (Library, Grocery list) |
+| `headlineSmall` | Newsreader | 24 / 32 | 600 | Dialog titles, empty-state titles |
+| `titleLarge` | Newsreader | 22 / 28 | 600 | Section titles (Ingredients, Steps, Nutrition), recipe names on cards |
+| `titleMedium` | Plus Jakarta Sans | 16 / 24 | 600 | List item titles, step section names in the editor |
+| `titleSmall` | Plus Jakarta Sans | 14 / 20 | 600 | Small headers, table headers |
+| `bodyLarge` | Plus Jakarta Sans | 16 / 24 | 400 | Ingredient lines, step text, notes |
+| `bodyMedium` | Plus Jakarta Sans | 14 / 20 | 400 | Default body text |
+| `bodySmall` | Plus Jakarta Sans | 12 / 16 | 400 | Metadata (source, times), helper text |
+| `labelLarge` | Plus Jakarta Sans | 14 / 20 | 600 | Buttons, tabs |
+| `labelMedium` | Plus Jakarta Sans | 12 / 16 | 600 | Chips, badges |
+| `labelSmall` | Plus Jakarta Sans | 11 / 16 | 600 | Nav bar labels, tiny counts |
 
 ### 5.3 App-specific styles
 
-Defined in an `AppTypography` theme extension. All of them use Inter.
+Defined in an `AppTypography` theme extension. All of them use Plus Jakarta Sans.
 
 | Style | Size / line height | Weight | Features | Used for |
 |---|---|---|---|---|
@@ -192,7 +191,7 @@ Defined in an `AppTypography` theme extension. All of them use Inter.
 
 ### 5.4 Rules
 
-- Fraunces is for names and titles only. Never for body text, buttons, or numbers. Cooking mode is all Inter.
+- Newsreader is for names and titles only. Never for body text, buttons, or numbers. Cooking mode is all Plus Jakarta Sans.
 - Every number that lines up with another number uses tabular figures.
 - Amounts are written with fraction glyphs (`1 ½ cups`, never `1 1/2 cups` or `1.5 cups` in US units). The formatter lives in `packages/measuring`, and the widget adds a screen-reader label ("one and a half cups").
 - Sentence case everywhere, including buttons and titles ("Add to grocery list", not "Add To Grocery List").
@@ -468,7 +467,7 @@ packages/design_system/
         component_themes.dart   Button, chip, card, field, nav themes
         context_ext.dart        context.appColors, context.appText, ...
       widgets/                  One file per component in §9.2
-  assets/fonts/                 Fraunces and Inter variable fonts (OFL)
+  assets/fonts/                 Newsreader and Plus Jakarta Sans variable fonts (OFL)
   test/
     goldens/                    Light, dark, cooking-light, cooking-dark, 200% text
     contrast_test.dart          §12 color pair checks
@@ -492,4 +491,3 @@ packages/design_system/
 
 1. **Custom measuring-tool icons:** ship as an icon font (one asset, colors like any icon) or as SVGs through `flutter_svg` (easier to draw and update)? Icon font is the default.
 2. **App name and logo:** the working name is still "Recipe App" (PRD). The cover, app icon, and splash screen wait for a real name.
-3. **Fraunces vs. another serif:** confirm after seeing it on real recipe names in the first build.
