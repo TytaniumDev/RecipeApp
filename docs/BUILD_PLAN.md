@@ -19,7 +19,7 @@ The last section (§8) is the checklist of accounts and keys only Tyler can crea
 
 ## 2. Starting point: the scaffold
 
-Every task starts after the **scaffold PR** (task `S0`, built in its own thread) has merged. Tasks below rely on the scaffold providing:
+Every task starts after the **scaffold** (task `S0`, a short series of PRs built in its own thread) has fully merged. Tasks below rely on the scaffold providing:
 
 | Area | What the scaffold provides |
 |---|---|
