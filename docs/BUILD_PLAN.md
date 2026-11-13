@@ -45,7 +45,7 @@ These rules are what keep agents from colliding. They apply to every task.
 1. **One task, one PR, one branch.** Branch name `task/<id>-<short-slug>`, for example `task/par-1-ingredient-parser`.
 2. **Edit only the paths your task owns** (listed in §6), plus the shared files in §3.2. Tests live next to the code they test and are owned by the same task.
 3. **Ownership is by folder.** Where two tasks share a package, each owns a different `lib/src/<module>/` folder and the matching `test/<module>/` folder.
-4. **Depend on interfaces, not implementations.** UI and application tasks code against the repository interfaces in `packages/domain` and test with hand-written fakes. They do **not** wait for the data task that implements the interface. The two meet when the provider override in the app switches from the fake to the real repository, which is done by the data task.
+4. **Depend on interfaces, not implementations.** UI and application tasks code against the repository interfaces in `packages/domain` and test with hand-written fakes. They do **not** wait for the data task that implements the interface. The two meet when the data task replaces the throwing body of its provider in `app/lib/app/providers/repositories.dart` with the real repository. Feature tests keep overriding that provider with fakes.
 5. **A feature's public surface is one file.** Another feature may import only `lib/features/<name>/<name>.dart` (for example, the recipe page imports `NutritionSummary` from `features/nutrition/nutrition.dart`). Everything else in a feature folder is private to it.
 
 ### 3.2 Shared files
@@ -75,6 +75,7 @@ Some files are touched by many tasks. Keep each change to them small, so conflic
 - Tests at the level ENGINEERING §15 asks for: unit tests for pure code, widget tests **with rebuild counts** for UI, goldens for design-system widgets (light, dark, cooking light, cooking dark, 200% text).
 - CI is green, including the coverage gate. The PR merges automatically once it is.
 - Any new user-facing string is in `app_en.arb`.
+- A package's first tests come with its matrix entry in `.github/workflows/ci.yml` (§3.2); CI fails otherwise.
 
 ### 3.5 Tracking
 
@@ -166,11 +167,11 @@ Paths are relative to the repo root. `app/` means `apps/recipe_app/`. Every task
 
 | ID | Task | Owns | Depends on | Done when |
 |---|---|---|---|---|
-| FND-1 | **Quantities and units.** Rational arithmetic on `Quantity`, unit aliases and families (US volume, metric volume, weight, count), conversion between US customary and metric, scaling by servings or multiplier, rounding to amounts people can measure (PRD 7.6) | `packages/domain/lib/src/value_objects/` (the `Quantity` and `Unit` files) and a new `packages/domain/lib/src/units/` | S0 | ⅓ cup × 3 equals 1 cup exactly; conversion and rounding tables are unit-tested; 90% coverage |
+| FND-1 | **Quantities and units.** Rational arithmetic on `Quantity`, unit aliases and families (US volume, metric volume, weight, count), conversion between US customary and metric, scaling by servings or multiplier, rounding to amounts people can measure (PRD 7.6) | `packages/domain/lib/src/value_objects/quantity.dart` and `unit.dart`, and a new `packages/domain/lib/src/units/` | S0 | ⅓ cup × 3 equals 1 cup exactly; conversion and rounding tables are unit-tested; 90% coverage |
 | BE-0 | **Firebase skeleton.** `functions/` TypeScript project, `firebase.json`, `firestore.rules` (deny all), `storage.rules` (deny all), emulator config using a `demo-recipeapp` project id (works with no real project), rules test harness, CI job that lints, builds, and runs function and rules tests against the emulators | `functions/**`, `firebase.json`, `.firebaserc`, `firestore.rules`, `firestore.indexes.json`, `storage.rules`, `.github/workflows/functions.yaml` | S0 | CI runs the emulators and a sample rules test passes; no real Firebase project needed |
 | SYN-1 | **Clock and merge core.** Hybrid logical clock, `Change` model (ENGINEERING §8.1), per-field last-writer-wins merge, tombstones, idempotent apply, and the "losing long text goes to history" rule as a pure function | `packages/sync/lib/src/core/` | S0 | Randomized multi-device tests show every replica converges; 90% coverage |
 | USDA-1 | **USDA builder.** CLI that turns the FoodData Central Foundation and SR Legacy CSV releases into the compact read-only SQLite file (foods, nutrients, portions), with a fixed schema version. The generated file is committed to the repo as a normal file, no Git LFS (§9.1) | `tools/usda_builder/**`, `apps/recipe_app/assets/nutrition/usda_foods.sqlite` | S0 | Running the CLI on the official release produces the file and it is committed; the file is only ever regenerated with the CLI, never edited by hand; schema documented in the tool's README; tests run on a small CSV fixture |
-| OBS-1 | **Crash reporting.** Sentry implementation of the scaffold's `ErrorReporter`, reading the DSN from a `--dart-define`, off when no DSN is set. Debug-symbol and source-map upload left to `REL-1` | `app/lib/bootstrap.dart` (Sentry wiring only), `app/lib/shared/error_reporting/` | S0 | Errors reach Sentry when a DSN is given; the app runs with none; tests use a fake reporter |
+| OBS-1 | **Crash reporting.** Sentry implementation of the scaffold's `ErrorReporter`, reading the DSN from a `--dart-define`, off when no DSN is set. Debug-symbol and source-map upload left to `REL-1` | `app/lib/app/services/error_reporter.dart` (replaces the stub), `app/lib/bootstrap.dart` (Sentry init only) | S0 | Errors reach Sentry when a DSN is given; the app runs with none; tests use a fake reporter |
 
 ### 6.2 Design system components
 
@@ -198,20 +199,20 @@ The components in DESIGN_SYSTEM §9.2, split by the feature that needs them firs
 | IMP-2 | **Umami import and export.** Read and write Umami's export format, including folders and photos where possible, and document what transfers | `packages/recipe_import/lib/src/umami/` | S0; PAR-1 (soft); **Tyler's sample Umami export (§8.10)** | Round trip of Tyler's export loses nothing the doc says is kept |
 | NUT-1 | **Food matching.** Normalize, synonym table, rank candidates by token overlap, prefer generic USDA; unmatched is explicit (ENGINEERING §11.2) | `packages/nutrition/lib/src/matching/` | USDA-1 (food schema) | Match accuracy measured on a fixture of common ingredients; target 90% (PRD §8) |
 | NUT-2 | **Grams and totals.** Unit → grams via USDA portions, then a curated density table; batch totals and per serving for a given serving size | `packages/nutrition/lib/src/convert/`, `packages/nutrition/lib/src/totals/` | FND-1 | Pure functions with worked-example tests |
-| NUT-3 | **Online foods.** Clients for USDA Branded Foods (through `BE-2`) and Open Food Facts, with our `User-Agent` (§8.6); results returned as domain `Food` values for caching by `DATA-7` | `packages/nutrition/lib/src/online/` | BE-2 | Clients tested against recorded responses; OFF attribution kept on each food |
+| NUT-3 | **Online foods.** Clients for USDA Branded Foods (through `BE-2`) and Open Food Facts, with our `User-Agent` (§8.6); results returned as domain `Food` values for caching by `DATA-7` | `packages/nutrition/lib/src/online/`, `app/lib/app/services/nutrition_api.dart` (replaces the `OfflineNutritionApi` stub) | BE-2 | Clients tested against recorded responses; OFF attribution kept on each food |
 
 ### 6.4 Data layer and backend
 
-Each `DATA-*` task implements one aggregate's repository interface, fills in its DAO, and switches the app's provider override from the fake to the real repository.
+Each `DATA-*` task implements one aggregate's repository interface, fills in its DAO, and replaces the body of its provider in `app/lib/app/providers/repositories.dart` (§3.2). DAOs live in `packages/data/lib/src/daos/`.
 
 | ID | Task | Owns | Depends on | Done when |
 |---|---|---|---|---|
-| DATA-1 | **Change recorder.** Writes `change_log` rows with HLC timestamps in the same transaction as each write; a small API every repository uses | `packages/data/lib/src/change_log/` | SYN-1 | Every write path in a test DB produces the right change rows |
+| DATA-1 | **Change recorder.** Writes `change_log` rows with HLC timestamps in the same transaction as each write; a small API every repository uses | `packages/data/lib/src/change_log/`, `sync_dao.dart` | SYN-1 | Every write path in a test DB produces the right change rows |
 | DATA-2 | **Recipes.** Recipe, ingredient lines, sections, and steps; fractional sort keys; FTS5 over titles, ingredient names, and folder names (a schema PR, §3.3) | `packages/data/lib/src/recipes/`, the recipe DAO | DATA-1 | Watch queries are `distinct()`; search tested; migration snapshot added |
 | DATA-3 | **Folders.** Folders and many-to-many entries | `packages/data/lib/src/folders/`, the folder DAO | DATA-1 | |
 | DATA-4 | **Grocery lists.** Lists and items linked to source lines | `packages/data/lib/src/grocery/`, the grocery DAO | DATA-1 | |
 | DATA-5 | **Versions and experiments.** Snapshots, experiments, promote, restore, and the losing-edit history entries from `SYN-1` | `packages/data/lib/src/history/`, the history DAO | DATA-1 | Promote and restore are single transactions |
-| DATA-6 | **Preferences and tools.** `UserRecipePrefs`, `MeasuringTool`, and app settings (theme mode, units, sync choice) | `packages/data/lib/src/prefs/`, the prefs DAO | DATA-1 | |
+| DATA-6 | **Preferences and tools.** `UserRecipePrefs`, `MeasuringTool`, and app settings (theme mode, units, sync choice). The scaffold has no settings table, so adding one is a schema PR (§3.3); say in the PR which settings sync and which stay on the device | `packages/data/lib/src/prefs/`, `user_recipe_prefs_dao.dart`, `measuring_tool_dao.dart` | DATA-1 | |
 | DATA-7 | **Foods.** Attach the bundled USDA file read-only, cache branded and OFF foods, store `NutritionMatch` rows; web download-once of the bundled file | `packages/data/lib/src/foods/`, the food DAO | USDA-1 | Works on all three platforms; replacing the bundled file needs no migration |
 | BE-1 | **Fetch proxy** for web URL import, App Check enforced, with an allow-list of content types and a size limit | `functions/src/fetch_proxy/` | BE-0 | Emulator tests; rejects requests without App Check |
 | BE-2 | **USDA proxy.** Forwards search and food requests, adds the API key from a function secret, caches responses | `functions/src/usda_proxy/` | BE-0 | Emulator tests with a fake upstream; key never reaches the client |
@@ -231,10 +232,10 @@ Each feature task owns `app/lib/features/<name>/**` and `app/test/features/<name
 | APP-GRO | `grocery` | Add to grocery list sheet with line-by-line include, several recipes per list, combined items by store section, check-off, manual items (7.7) | DS-3, GRO-1, DATA-4 |
 | APP-EXP | `experiments` | Start, edit, record what changed and how it went, promote or keep, history timeline, view and restore past versions (7.11) | DATA-5 |
 | APP-SET | `settings` | Theme mode, units, my measuring tools, about and licenses including Open Food Facts attribution (7.5, 7.6) | DATA-6 |
-| APP-ACC | `account` | Optional sign-in with Google or Apple, attaching existing local data on first sign-in, sign-out (7.9) | Auth emulator for tests; §8.1 to §8.4 for real devices |
+| APP-ACC | `account`, plus `app/lib/app/services/auth_service.dart` | Optional sign-in with Google or Apple replacing the `AuthService` stub, attaching existing local data on first sign-in, sign-out (7.9) | Auth emulator for tests; §8.1 to §8.4 for real devices |
 | APP-SYN | `account/sync/` (subfolder) | Choose Drive or Recipe App cloud, switch between them, sync status in the shell via `SyncStatusIcon` (7.8) | APP-ACC, SYN-4, SYN-5 |
 | APP-SHR | `sharing` | Share jointly or send a copy, recipient sees which, leave a joint share, view-only links, experiment "Share with others" toggle (7.10, 7.11) | SHR-1 |
-| PRO-1 | `account/pro/` (subfolder), `functions/src/revenuecat_webhook/` | Paywall, RevenueCat SDK, entitlement provider replacing the scaffold stub, webhook that writes the entitlement to Firestore (7.12) | BE-0; §8.7 for real purchases |
+| PRO-1 | `account/pro/` (subfolder), `app/lib/app/services/entitlements.dart`, `functions/src/revenuecat_webhook/` | Paywall, RevenueCat SDK, `Entitlements` implementation replacing the scaffold stub, webhook that writes the entitlement to Firestore (7.12) | BE-0; §8.7 for real purchases |
 
 ### 6.6 Sync, sharing, and media
 
