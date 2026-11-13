@@ -8,7 +8,7 @@ part 'theme_mode_controller.g.dart';
 @Riverpod(keepAlive: true)
 class ThemeModeController extends _$ThemeModeController {
   @override
-  ThemeMode build() => ThemeMode.system;
+  ThemeMode build() => .system;
 
   // A setter would read oddly at call sites: `notifier.select(mode)`.
   // ignore: use_setters_to_change_properties

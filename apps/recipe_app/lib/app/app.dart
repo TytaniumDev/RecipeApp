@@ -19,7 +19,10 @@ class RecipeApp extends ConsumerWidget {
     darkTheme: _darkTheme,
     themeMode: ref.watch(themeModeControllerProvider),
     routerConfig: ref.watch(routerProvider),
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    localizationsDelegates: const [
+      AppLocalizations.delegate,
+      ...GlobalMaterialLocalizations.delegates,
+    ],
     supportedLocales: AppLocalizations.supportedLocales,
     debugShowCheckedModeBanner: false,
   );

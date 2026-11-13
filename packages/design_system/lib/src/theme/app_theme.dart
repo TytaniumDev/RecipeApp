@@ -16,8 +16,7 @@ abstract final class AppTheme {
   static ThemeData dark() => _build(AppColorSchemes.dark, AppColors.dark);
 
   /// The high-contrast cooking theme for [brightness] (§10.3).
-  static ThemeData cooking(Brightness brightness) =>
-      brightness == Brightness.light
+  static ThemeData cooking(Brightness brightness) => brightness == .light
       ? _build(AppColorSchemes.cookingLight, AppColors.cookingLight)
       : _build(AppColorSchemes.cookingDark, AppColors.cookingDark);
 

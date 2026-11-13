@@ -8,7 +8,7 @@ import 'package:material_ui/material_ui.dart';
 abstract final class AppColorSchemes {
   /// Light theme, Material standard contrast.
   static const light = ColorScheme(
-    brightness: Brightness.light,
+    brightness: .light,
     primary: Color(0xFF3F692D),
     onPrimary: Color(0xFFFFFFFF),
     primaryContainer: Color(0xFFBFF0A6),
@@ -48,7 +48,7 @@ abstract final class AppColorSchemes {
 
   /// Dark theme, Material standard contrast.
   static const dark = ColorScheme(
-    brightness: Brightness.dark,
+    brightness: .dark,
     primary: Color(0xFFA4D48C),
     onPrimary: Color(0xFF103803),
     primaryContainer: Color(0xFF285018),
@@ -88,7 +88,7 @@ abstract final class AppColorSchemes {
 
   /// Cooking mode on a light theme. High contrast: text pairs reach 7:1.
   static const cookingLight = ColorScheme(
-    brightness: Brightness.light,
+    brightness: .light,
     primary: Color(0xFF0C3400),
     onPrimary: Color(0xFFFFFFFF),
     primaryContainer: Color(0xFF2A521A),
@@ -128,7 +128,7 @@ abstract final class AppColorSchemes {
 
   /// Cooking mode on a dark theme. High contrast: text pairs reach 7:1.
   static const cookingDark = ColorScheme(
-    brightness: Brightness.dark,
+    brightness: .dark,
     primary: Color(0xFFCCFEB2),
     onPrimary: Color(0xFF000000),
     primaryContainer: Color(0xFFA0D088),
