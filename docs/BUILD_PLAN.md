@@ -32,7 +32,7 @@ Every task starts after the **scaffold** (task `S0`, a short series of PRs built
 | Shared app code | `AsyncValueView` in `lib/shared/widgets/`, `BuildCounter` and `pumpApp` in `test/helpers/`, one `lib/l10n/arb/app_en.arb` read through `context.l10n` |
 | Bootstrap | `bootstrap.dart` wiring `ErrorReporter` into Flutter's error hooks. Stub interfaces and providers for `ErrorReporter`, `AuthService`, `Entitlements`, and `NutritionApi` in `lib/app/services/`; one throwing provider per repository interface in `lib/app/providers/repositories.dart`; the database provider in `lib/app/providers/database.dart` |
 | Conventions | `CLAUDE.md` with coding rules (small widgets, Riverpod patterns, tests) |
-| App id | `dev.tytanium.sousline` (can change until the store records exist, see §8) |
+| App id | `dev.tytanium.sousline` (Android application id and iOS bundle id, registered in Firebase; permanent once the store records exist, see §8) |
 
 If any of this turns out to be missing when the scaffold merges, add a task for it to wave 1 before anything that depends on it.
 
@@ -274,17 +274,17 @@ The order below is the order to do them in, because later items depend on earlie
 
 ### 8.0 Decide first
 
-- [ ] **App id.** The scaffold uses `dev.tytanium.sousline`. It becomes permanent once the App Store and Play records exist. Change it now if the final app name should be in it; otherwise keep it, since the id is never shown to users.
-- [ ] **Contact email** for the stores, the OAuth consent screen, and the Open Food Facts `User-Agent`. A dedicated address is better than a personal one.
+- [x] **App name and id.** The app is **Sousline** (Tyler, 2026-11-13), with app id `dev.tytanium.sousline` on iOS and Android. The id becomes permanent once the App Store and Play records exist.
+- [x] **Contact email** for the stores, the OAuth consent screen, and the Open Food Facts `User-Agent`: Tyler's developer address (2026-11-13). Agents get it from Tyler rather than from this public repo.
 - [ ] **Privacy policy URL.** Needed by both stores and the OAuth consent screen. A page on Firebase Hosting works.
 
 ### 8.1 Firebase (needed by `BE-*`, `SYN-5`, `SHR-1`, `APP-ACC`, `PRO-1`, `REL-1`)
 
 One project only, with no dev and prod split (Tyler, 2026-11-13). Day-to-day development and tests run against the local emulators, so the real project is only touched by real devices and the beta.
 
-- [ ] Create the project at [console.firebase.google.com](https://console.firebase.google.com). Google Analytics can be off.
+- [x] Create the project at [console.firebase.google.com](https://console.firebase.google.com). Google Analytics can be off. Created 2026-11-13: project id **`sousline`** (number 732839535725), so the auth domain is `sousline.firebaseapp.com` and Hosting is `sousline.web.app`.
 - [ ] Upgrade it to the **Blaze** (pay as you go) plan, which Cloud Functions requires. Set a **budget alert** in Google Cloud Billing (for example $10 a month) so costs never surprise you.
-- [ ] Add an iOS app, an Android app, and a web app to the project, using the app id from §8.0.
+- [x] Add an iOS app, an Android app, and a web app to the project, using the app id from §8.0. Registered 2026-11-13 as `Sousline iOS`, `Sousline Android`, and `Sousline Web`.
 - [ ] Turn on **Firestore** (production mode, region close to you, for example `us-central1`), **Cloud Storage**, and **Hosting**.
 - [ ] **App Check:** register App Attest (iOS), Play Integrity (Android), and reCAPTCHA Enterprise (web).
 - [ ] For CI deploys (`REL-1`): create a service account with the Firebase deploy roles, or set up Workload Identity Federation for GitHub, and add it as a GitHub Actions secret.
@@ -343,8 +343,8 @@ Costs $25 once.
 
 ### 8.8 Sentry (needed by `OBS-1`, `REL-1`)
 
-- [ ] Create an organization and one **Flutter** project at [sentry.io](https://sentry.io). The free Developer plan is enough for the beta.
-- [ ] Give an agent the project **DSN** (safe to ship in the app).
+- [x] Create an organization and one **Flutter** project at [sentry.io](https://sentry.io). The free Developer plan is enough for the beta. Created 2026-11-13: org `tytaniumdev`, project `sousline`.
+- [x] Give an agent the project **DSN** (safe to ship in the app): `https://b2a333b66dcd479d1087e98242605f93@o4510951154712576.ingest.us.sentry.io/4512426129686528`. `OBS-1` passes it with `--dart-define=SENTRY_DSN=...`.
 - [ ] Create an **auth token** for uploading debug symbols and web source maps, and store it as the `SENTRY_AUTH_TOKEN` GitHub Actions secret.
 
 ### 8.9 GitHub repository settings
@@ -354,7 +354,7 @@ Costs $25 once.
 
 ### 8.10 Inputs only Tyler has (not accounts)
 
-- [ ] **A real Umami export** of your library, for `IMP-2` (ENGINEERING §18.1). Drop it in the project files or a private place an agent can read. It should not go in the public repo.
+- [x] **A real Umami export** of your library, for `IMP-2` (ENGINEERING §18.1). Drop it in the project files or a private place an agent can read. It should not go in the public repo. Received 2026-11-13 (JSON and HTML exports, 226 recipes) and kept in the project files with format notes, outside the repo.
 - [ ] **Your measuring cups and spoons**, for a realistic default in `MEA-1` and your own settings.
 - [ ] **A list of recipe sites you use most**, so `IMP-1` fixtures cover them first.
 
