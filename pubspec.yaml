@@ -7,3 +7,9 @@ environment:
 
 workspace:
   - packages/domain
+  - packages/ingredient_parser
+  - packages/measuring
+  - packages/nutrition
+  - packages/recipe_import
+  - packages/sync
+  - tools/usda_builder

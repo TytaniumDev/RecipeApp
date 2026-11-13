@@ -1,0 +1,16 @@
+name: nutrition
+description: >-
+  Food matching, unit to gram conversion, and nutrition totals. ENGINEERING.md §11.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.14.0
+
+dependencies:
+  domain: any
+
+dev_dependencies:
+  test: ^1.33.0
+  very_good_analysis: ^11.0.0
