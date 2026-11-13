@@ -44,6 +44,16 @@ jobs:
             exit 1
           fi
 
+      - name: 🗄️ Drift schema snapshot is up to date
+        working-directory: packages/data
+        run: |
+          dart run drift_dev make-migrations
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::The Drift schema changed without a snapshot. Bump schemaVersion, add the migration, run 'dart run drift_dev make-migrations' in packages/data, and commit the result."
+            git status --porcelain
+            exit 1
+          fi
+
   # One job per workspace member, from Very Good Ventures' reusable workflow:
   # format, analyze, tests, and a coverage gate (ENGINEERING.md §16).
   # Every member uses flutter_package, even pure Dart ones, because a pub
@@ -55,6 +65,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - package: packages/data
+            min_coverage: 90
           - package: packages/domain
             min_coverage: 90
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v2
@@ -62,7 +74,9 @@ jobs:
       working_directory: ${{ matrix.package }}
       flutter_version_file: .fvmrc
       min_coverage: ${{ matrix.min_coverage }}
-      coverage_excludes: "**/*.g.dart **/*.freezed.dart"
+      # Drift table classes are declarations that never run; the schema is
+      # covered by the snapshot check in the workspace job instead.
+      coverage_excludes: "**/*.g.dart **/*.freezed.dart lib/src/tables/**"
 
   # The single required status check for branch protection. It passes only
   # when every job above passed, so new jobs never need new protection rules.
