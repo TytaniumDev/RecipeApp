@@ -9,9 +9,7 @@ final ThemeData _lightTheme = AppTheme.light();
 final ThemeData _darkTheme = AppTheme.dark();
 
 /// The root widget. Rebuilds only when the theme mode or router changes.
-class RecipeApp extends ConsumerWidget {
-  const new({super.key});
-
+class const RecipeApp({super.key}) extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) => MaterialApp.router(
     onGenerateTitle: (context) => context.l10n.app_title,
@@ -19,7 +17,10 @@ class RecipeApp extends ConsumerWidget {
     darkTheme: _darkTheme,
     themeMode: ref.watch(themeModeControllerProvider),
     routerConfig: ref.watch(routerProvider),
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    localizationsDelegates: const [
+      AppLocalizations.delegate,
+      ...GlobalMaterialLocalizations.delegates,
+    ],
     supportedLocales: AppLocalizations.supportedLocales,
     debugShowCheckedModeBanner: false,
   );

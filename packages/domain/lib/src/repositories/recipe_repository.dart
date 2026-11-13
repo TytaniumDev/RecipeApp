@@ -1,3 +1,7 @@
+// An interface has no code to run; only its empty primary constructor
+// would show up, as an uncovered line.
+// coverage:ignore-file
+
 import 'package:domain/src/entities/ingredient_line.dart';
 import 'package:domain/src/entities/ingredient_section.dart';
 import 'package:domain/src/entities/recipe.dart';
@@ -9,7 +13,7 @@ import 'package:domain/src/value_objects/ids.dart';
 ///
 /// Watch methods emit only when the watched data really changes, so
 /// widgets that watch them rebuild only then (ENGINEERING.md §5).
-abstract interface class RecipeRepository {
+abstract interface class RecipeRepository() {
   /// Every recipe id, newest first.
   Stream<List<RecipeId>> watchRecipeIds();
 

@@ -9,6 +9,6 @@ part 'grocery_dao.g.dart';
 /// Empty in the scaffold. The data task for this aggregate adds its queries
 /// (docs/BUILD_PLAN.md).
 @DriftAccessor(tables: [GroceryLists, GroceryItems])
-class GroceryDao extends DatabaseAccessor<AppDatabase> with _$GroceryDaoMixin {
-  new(super.attachedDatabase);
-}
+class GroceryDao(super.attachedDatabase)
+    extends DatabaseAccessor<AppDatabase>
+    with _$GroceryDaoMixin;

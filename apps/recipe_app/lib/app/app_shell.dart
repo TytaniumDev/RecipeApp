@@ -7,11 +7,10 @@ import 'package:recipe_app/l10n/l10n.dart';
 /// The frame around the top-level destinations: Library, Grocery list,
 /// and Settings (DESIGN_SYSTEM.md §6.3). A bottom navigation bar on compact
 /// windows, a navigation rail on wider ones.
-class AppShell extends StatelessWidget {
-  const new({required this.navigationShell, super.key});
-
-  final StatefulNavigationShell navigationShell;
-
+class const AppShell({
+  required final StatefulNavigationShell navigationShell,
+  super.key,
+}) extends StatelessWidget {
   void _select(int index) => navigationShell.goBranch(
     index,
     // Tapping the current tab returns to its first screen.
@@ -21,7 +20,7 @@ class AppShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selectedIndex = navigationShell.currentIndex;
-    if (WindowSizeClass.of(context) == WindowSizeClass.compact) {
+    if (WindowSizeClass.of(context) == .compact) {
       return Scaffold(
         body: navigationShell,
         bottomNavigationBar: _BottomNavigation(
@@ -42,12 +41,10 @@ class AppShell extends StatelessWidget {
 }
 
 /// One top-level destination.
-class _Destination {
-  const new(this.icon, this.label);
-
-  final IconData icon;
-  final String Function(AppLocalizations l10n) label;
-}
+class const _Destination(
+  final IconData icon,
+  final String Function(AppLocalizations l10n) label,
+);
 
 final _destinations = [
   _Destination(Symbols.menu_book_rounded, (l10n) => l10n.nav_library),
@@ -55,12 +52,10 @@ final _destinations = [
   _Destination(Symbols.settings_rounded, (l10n) => l10n.nav_settings),
 ];
 
-class _BottomNavigation extends StatelessWidget {
-  const new({required this.selectedIndex, required this.onSelected});
-
-  final int selectedIndex;
-  final ValueChanged<int> onSelected;
-
+class const _BottomNavigation({
+  required final int selectedIndex,
+  required final ValueChanged<int> onSelected,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -79,12 +74,10 @@ class _BottomNavigation extends StatelessWidget {
   }
 }
 
-class _SideNavigation extends StatelessWidget {
-  const new({required this.selectedIndex, required this.onSelected});
-
-  final int selectedIndex;
-  final ValueChanged<int> onSelected;
-
+class const _SideNavigation({
+  required final int selectedIndex,
+  required final ValueChanged<int> onSelected,
+}) extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -95,9 +88,7 @@ class _SideNavigation extends StatelessWidget {
       selectedIndex: selectedIndex,
       onDestinationSelected: onSelected,
       extended: extended,
-      labelType: extended
-          ? NavigationRailLabelType.none
-          : NavigationRailLabelType.all,
+      labelType: extended ? .none : .all,
       destinations: [
         for (final destination in _destinations)
           NavigationRailDestination(

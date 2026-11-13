@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 /// Material's window size classes (DESIGN_SYSTEM.md §6.3), applied the same
 /// way on phones, tablets, and web.
-enum WindowSizeClass {
+enum WindowSizeClass() {
   /// Under 600 dp: bottom navigation bar, one pane.
   compact,
 

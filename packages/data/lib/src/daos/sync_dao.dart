@@ -9,6 +9,6 @@ part 'sync_dao.g.dart';
 /// Empty in the scaffold. The data task for this aggregate adds its queries
 /// (docs/BUILD_PLAN.md).
 @DriftAccessor(tables: [ChangeLog, SyncState])
-class SyncDao extends DatabaseAccessor<AppDatabase> with _$SyncDaoMixin {
-  new(super.attachedDatabase);
-}
+class SyncDao(super.attachedDatabase)
+    extends DatabaseAccessor<AppDatabase>
+    with _$SyncDaoMixin;

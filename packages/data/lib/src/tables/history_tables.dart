@@ -4,7 +4,7 @@ import 'package:drift/drift.dart';
 /// Recipe snapshots. See `RecipeVersion` in `packages/domain`.
 @DataClassName('RecipeVersionRow')
 @TableIndex(name: 'recipe_versions_recipe', columns: {#recipeId})
-class RecipeVersions extends Table {
+class RecipeVersions() extends Table {
   TextColumn get id => text()();
   TextColumn get recipeId => text()();
   DateTimeColumn get createdAt => dateTime()();
@@ -18,7 +18,7 @@ class RecipeVersions extends Table {
 /// Experiments. See `Experiment`.
 @DataClassName('ExperimentRow')
 @TableIndex(name: 'experiments_recipe', columns: {#recipeId})
-class Experiments extends Table {
+class Experiments() extends Table {
   TextColumn get id => text()();
   TextColumn get recipeId => text()();
   TextColumn get baseVersionId => text()();

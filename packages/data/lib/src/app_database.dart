@@ -57,9 +57,7 @@ part 'app_database.g.dart';
     SyncDao,
   ],
 )
-class AppDatabase extends _$AppDatabase {
-  new(super.e);
-
+class AppDatabase(super.e) extends _$AppDatabase {
   /// Bump this with every schema change, add the step to [migration], and
   /// run `dart run drift_dev make-migrations` to snapshot the new schema.
   @override

@@ -30,11 +30,9 @@ void main() {
       expect(standard.cookingStepLarge.fontSize, 34);
     });
 
-    test('sets the weight axis of the variable font', () {
-      expect(
-        standard.numberHero.fontVariations,
-        contains(const FontVariation.weight(600)),
-      );
+    test('sets the weight with FontWeight, not a font variation', () {
+      expect(standard.numberHero.fontWeight, FontWeight.w600);
+      expect(standard.numberHero.fontVariations, isNull);
     });
 
     test('copyWith replaces one style', () {
@@ -53,19 +51,24 @@ void main() {
   });
 
   group('appTextStyle', () {
+    test('accepts any weight the variable axis supports', () {
+      final style = appTextStyle(family: AppFonts.sans, weight: 650);
+
+      expect(style.fontWeight?.value, 650);
+    });
+
     test('sets the optical size of Newsreader to the text size', () {
       final style = appTextStyle(family: AppFonts.serif, weight: 600, size: 32);
 
-      expect(style.fontVariations, [
-        const FontVariation.weight(600),
-        const FontVariation.opticalSize(32),
-      ]);
+      expect(style.fontWeight, FontWeight.w600);
+      expect(style.fontVariations, [const FontVariation.opticalSize(32)]);
     });
 
     test('leaves the optical size of Plus Jakarta Sans alone', () {
       final style = appTextStyle(family: AppFonts.sans, weight: 400, size: 16);
 
-      expect(style.fontVariations, [const FontVariation.weight(400)]);
+      expect(style.fontWeight, FontWeight.w400);
+      expect(style.fontVariations, isNull);
     });
   });
 }

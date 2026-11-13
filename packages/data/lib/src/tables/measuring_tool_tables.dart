@@ -3,7 +3,7 @@ import 'package:drift/drift.dart';
 
 /// Measuring tools the user owns. See `MeasuringTool` in `packages/domain`.
 @DataClassName('MeasuringToolRow')
-class MeasuringTools extends Table {
+class MeasuringTools() extends Table {
   TextColumn get id => text()();
   IntColumn get capacityNumerator => integer()();
   IntColumn get capacityDenominator => integer()();

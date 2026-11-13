@@ -3,22 +3,43 @@ import 'package:material_ui/material_ui.dart';
 /// Colors Material has no roles for: the macro colors and warning
 /// (DESIGN_SYSTEM.md §4.3). Read them with `context.appColors`.
 @immutable
-class AppColors extends ThemeExtension<AppColors> {
-  const new({
-    required this.protein,
-    required this.proteinContainer,
-    required this.onProteinContainer,
-    required this.carbs,
-    required this.carbsContainer,
-    required this.onCarbsContainer,
-    required this.fat,
-    required this.fatContainer,
-    required this.onFatContainer,
-    required this.warning,
-    required this.warningContainer,
-    required this.onWarningContainer,
-  });
+class const AppColors({
+  /// Protein marks and numbers on surfaces.
+  required final Color protein,
 
+  /// Soft fill behind a protein label or chip.
+  required final Color proteinContainer,
+
+  /// Text and icons on [proteinContainer].
+  required final Color onProteinContainer,
+
+  /// Carbohydrate marks and numbers on surfaces.
+  required final Color carbs,
+
+  /// Soft fill behind a carbs label or chip.
+  required final Color carbsContainer,
+
+  /// Text and icons on [carbsContainer].
+  required final Color onCarbsContainer,
+
+  /// Fat marks and numbers on surfaces.
+  required final Color fat,
+
+  /// Soft fill behind a fat label or chip.
+  required final Color fatContainer,
+
+  /// Text and icons on [fatContainer].
+  required final Color onFatContainer,
+
+  /// Needs attention but is not an error. Always with an icon and words.
+  required final Color warning,
+
+  /// Soft fill behind a warning label or chip.
+  required final Color warningContainer,
+
+  /// Text and icons on [warningContainer].
+  required final Color onWarningContainer,
+}) extends ThemeExtension<AppColors> {
   /// Custom colors for the light scheme.
   static const light = AppColors(
     protein: Color(0xFF894E45),
@@ -53,16 +74,16 @@ class AppColors extends ThemeExtension<AppColors> {
 
   /// Custom colors for the cookingLight scheme.
   static const cookingLight = AppColors(
-    protein: Color(0xFF5F2D24),
+    protein: Color(0xFF57261E),
     proteinContainer: Color(0xFFFFDAD4),
     onProteinContainer: Color(0xFF370E08),
-    carbs: Color(0xFF513600),
+    carbs: Color(0xFF493000),
     carbsContainer: Color(0xFFFFDEAE),
     onCarbsContainer: Color(0xFF281900),
-    fat: Color(0xFF003E65),
+    fat: Color(0xFF00375B),
     fatContainer: Color(0xFFCEE5FF),
     onFatContainer: Color(0xFF001D33),
-    warning: Color(0xFF5B3100),
+    warning: Color(0xFF512B00),
     warningContainer: Color(0xFFFFDCC0),
     onWarningContainer: Color(0xFF2D1600),
   );
@@ -82,42 +103,6 @@ class AppColors extends ThemeExtension<AppColors> {
     warningContainer: Color(0xFF4B2800),
     onWarningContainer: Color(0xFFFFEEE1),
   );
-
-  /// Protein marks and numbers on surfaces.
-  final Color protein;
-
-  /// Soft fill behind a protein label or chip.
-  final Color proteinContainer;
-
-  /// Text and icons on [proteinContainer].
-  final Color onProteinContainer;
-
-  /// Carbohydrate marks and numbers on surfaces.
-  final Color carbs;
-
-  /// Soft fill behind a carbs label or chip.
-  final Color carbsContainer;
-
-  /// Text and icons on [carbsContainer].
-  final Color onCarbsContainer;
-
-  /// Fat marks and numbers on surfaces.
-  final Color fat;
-
-  /// Soft fill behind a fat label or chip.
-  final Color fatContainer;
-
-  /// Text and icons on [fatContainer].
-  final Color onFatContainer;
-
-  /// Needs attention but is not an error. Always with an icon and words.
-  final Color warning;
-
-  /// Soft fill behind a warning label or chip.
-  final Color warningContainer;
-
-  /// Text and icons on [warningContainer].
-  final Color onWarningContainer;
 
   @override
   AppColors copyWith({

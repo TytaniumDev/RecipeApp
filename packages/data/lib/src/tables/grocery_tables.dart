@@ -3,7 +3,7 @@ import 'package:drift/drift.dart';
 
 /// Grocery lists. See `GroceryList` in `packages/domain`.
 @DataClassName('GroceryListRow')
-class GroceryLists extends Table {
+class GroceryLists() extends Table {
   TextColumn get id => text()();
   TextColumn get name => text()();
   DateTimeColumn get createdAt => dateTime()();
@@ -15,7 +15,7 @@ class GroceryLists extends Table {
 /// Grocery list items. See `GroceryItem`.
 @DataClassName('GroceryItemRow')
 @TableIndex(name: 'grocery_items_list', columns: {#listId})
-class GroceryItems extends Table {
+class GroceryItems() extends Table {
   TextColumn get id => text()();
   TextColumn get listId => text()();
   TextColumn get name => text()();

@@ -17,7 +17,10 @@ extension PumpApp on WidgetTester {
       overrides: overrides,
       child: MaterialApp(
         theme: theme ?? AppTheme.light(),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          ...GlobalMaterialLocalizations.delegates,
+        ],
         supportedLocales: AppLocalizations.supportedLocales,
         home: widget,
       ),

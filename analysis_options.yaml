@@ -1,0 +1,34 @@
+# Lint rules shared by every workspace member. Each package's
+# analysis_options.yaml includes this file and adds only its own excludes
+# and plugins.
+#
+# We rely on lints for consistency (ENGINEERING.md §16): when a style rule
+# can be checked by a lint, we turn the lint on instead of writing the rule
+# down. very_good_analysis is the base; the rules below add to it.
+include: package:very_good_analysis/analysis_options.yaml
+
+linter:
+  rules:
+    # Internal packages, not published to pub.dev.
+    public_member_api_docs: false
+
+    # Current language and SDK (ENGINEERING.md §16.1).
+    use_primary_constructors: true
+    migrate_design_widgets: true
+
+    # One way to write things.
+    prefer_expression_function_bodies: true
+    avoid_annotating_with_dynamic: true
+    use_decorated_box: true
+    use_if_null_to_convert_nulls_to_bools: true
+    prefer_void_to_null: true
+
+    # Async and typing hygiene.
+    unnecessary_async: true
+    unnecessary_await_in_return: true
+    avoid_futureor_void: true
+    unsafe_variance: true
+    no_dynamic_casts: true
+    annotate_redeclares: true
+    avoid_null_checks_in_equality_operators: true
+    no_runtimetype_tostring: true

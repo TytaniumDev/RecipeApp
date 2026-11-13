@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user_recipe_prefs.freezed.dart';
 
 /// How amounts are shown for one recipe.
-enum UnitSystem {
+enum UnitSystem() {
   /// As written in the recipe.
   original,
 

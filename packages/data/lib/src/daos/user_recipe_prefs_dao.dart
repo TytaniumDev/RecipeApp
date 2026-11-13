@@ -9,7 +9,6 @@ part 'user_recipe_prefs_dao.g.dart';
 /// Empty in the scaffold. The data task for this aggregate adds its queries
 /// (docs/BUILD_PLAN.md).
 @DriftAccessor(tables: [UserRecipePrefsTable])
-class UserRecipePrefsDao extends DatabaseAccessor<AppDatabase>
-    with _$UserRecipePrefsDaoMixin {
-  new(super.attachedDatabase);
-}
+class UserRecipePrefsDao(super.attachedDatabase)
+    extends DatabaseAccessor<AppDatabase>
+    with _$UserRecipePrefsDaoMixin;

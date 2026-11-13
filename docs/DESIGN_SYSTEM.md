@@ -118,20 +118,20 @@ Material has no roles for macros or warnings, so we add them through an `AppColo
 
 | Role | Light | Dark | Cooking light | Cooking dark | Use |
 |---|---|---|---|---|---|
-| `protein` | `#894e45` | `#ffb4a7` | `#5f2d24` | `#ffdad4` | Protein marks (macro bar segment, dot) and protein numbers as text, on surface and surface-container levels. |
+| `protein` | `#894e45` | `#ffb4a7` | `#57261e` | `#ffdad4` | Protein marks (macro bar segment, dot) and protein numbers as text, on surface and surface-container levels. |
 | `protein-container` | `#ffdad4` | `#6d382f` | `#ffdad4` | `#51221a` | Soft protein fill behind a protein label or chip. |
 | `on-protein-container` | `#6d382f` | `#ffdad4` | `#370e08` | `#ffedea` | Text on protein-container. |
-| `carbs` | `#7f5600` | `#ffba3e` | `#513600` | `#ffdeae` | Carbohydrate marks and numbers, on surface and surface-container levels. |
+| `carbs` | `#7f5600` | `#ffba3e` | `#493000` | `#ffdeae` | Carbohydrate marks and numbers, on surface and surface-container levels. |
 | `carbs-container` | `#ffdeae` | `#604100` | `#ffdeae` | `#432c00` | Soft carbs fill behind a carbs label or chip. |
 | `on-carbs-container` | `#604100` | `#ffdeae` | `#281900` | `#ffeeda` | Text on carbs-container. |
-| `fat` | `#00639b` | `#97cbff` | `#003e65` | `#cee5ff` | Fat marks and numbers, on surface and surface-container levels. |
+| `fat` | `#00639b` | `#97cbff` | `#00375b` | `#cee5ff` | Fat marks and numbers, on surface and surface-container levels. |
 | `fat-container` | `#cee5ff` | `#004a76` | `#cee5ff` | `#003353` | Soft fat fill behind a fat label or chip. |
 | `on-fat-container` | `#004a76` | `#cee5ff` | `#001d33` | `#e8f2ff` | Text on fat-container. |
-| `warning` | `#8d4f00` | `#ffb875` | `#5b3100` | `#ffdcc0` | Needs attention but is not an error: unmatched ingredients, partial imports. Always with an icon and words. |
+| `warning` | `#8d4f00` | `#ffb875` | `#512b00` | `#ffdcc0` | Needs attention but is not an error: unmatched ingredients, partial imports. Always with an icon and words. |
 | `warning-container` | `#ffdcc0` | `#6b3b00` | `#ffdcc0` | `#4b2800` | Background of warning chips and banners. |
 | `on-warning-container` | `#6b3b00` | `#ffdcc0` | `#2d1600` | `#ffeee1` | Text and icons on warning-container. |
 
-Macro and warning colors used as text meet their contrast target on `surface` through `surface-container-high`. In the cooking-light scheme they fall just short of 7:1 on `surface-container-highest` (about 6.5:1), so don't put macro or warning text on that level in cooking mode. The contrast test checks exactly this set.
+Macro and warning colors used as text meet their contrast target on `surface` and every `surface-container` level, including 7:1 in the cooking schemes. In cooking light all four sit at HCT tone 22, dark enough to reach 7:1 even on `surface-container-highest`.
 
 ### 4.4 Rules
 

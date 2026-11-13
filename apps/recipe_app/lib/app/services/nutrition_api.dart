@@ -14,16 +14,14 @@ typedef OnlineFood = ({
 /// Facts (ENGINEERING.md §11.1).
 ///
 /// [OfflineNutritionApi] stands in until the USDA proxy exists.
-abstract interface class NutritionApi {
+abstract interface class NutritionApi() {
   Future<List<OnlineFood>> search(String query);
 
   Future<OnlineFood?> lookupBarcode(String barcode);
 }
 
 /// Finds nothing, as if offline. Bundled generic foods still work.
-class OfflineNutritionApi implements NutritionApi {
-  const new();
-
+class const OfflineNutritionApi() implements NutritionApi {
   @override
   Future<List<OnlineFood>> search(String query) async => const [];
 
