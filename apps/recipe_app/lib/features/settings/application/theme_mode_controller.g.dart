@@ -48,7 +48,7 @@ final class ThemeModeControllerProvider
 }
 
 String _$themeModeControllerHash() =>
-    r'7e0e09b523f30fd0cfbfb944eb145a98f6f32687';
+    r'1e74cf63528b724a9e913807a2a273c8699652ce';
 
 /// The Light / Dark / System setting (DESIGN_SYSTEM.md §3). Follows the
 /// system until the user picks. Saving the choice is a settings task.

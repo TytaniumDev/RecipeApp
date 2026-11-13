@@ -45,8 +45,12 @@ very_good test --coverage --min-coverage 90 \
 ## Dart conventions
 
 - Lints are `very_good_analysis`. No `// ignore:` without a comment saying why.
-- Dart 3.14 constructor syntax is enforced: `factory(...)`, `const new _(...)`, `const factory({...}) = _Foo;`. Run `dart fix --apply lib test` after writing code.
-- Import Material from `package:material_ui/material_ui.dart`, never `package:flutter/material.dart` (deprecated since Flutter 3.47).
+- Use only current, non-deprecated APIs. ENGINEERING.md §16.1 is the baseline (Flutter 3.50, Dart 3.14).
+- Concise constructor syntax is enforced: `factory(...)`, `const new _(...)`, `const factory({...}) = _Foo;`. Run `dart fix --apply` in the package after writing code. Don't use primary constructors yet (§16.1).
+- Dot shorthands for enum values and static members when the context gives the type: `themeMode: .system`, `brightness == .light`. Keep the type name inside `expect(...)` and annotations.
+- Import Material from `package:material_ui/material_ui.dart` (Cupertino from `package:cupertino_ui/cupertino_ui.dart`), never `package:flutter/material.dart` or `cupertino.dart` (deprecated since Flutter 3.47). `dart fix --apply --code=migrate_design_widgets` converts old code.
+- Localization delegates: `[AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates]` from `material_ui`. Never import `flutter_localizations`; only the generated l10n file uses it.
+- Variable font weight is `FontWeight(...)` alone (it drives the `wght` axis since 3.41). Never `FontVariation.weight`.
 - Use `package:` imports, never relative imports, in `lib/`.
 - Generated files (`*.g.dart`, `*.freezed.dart`, `lib/l10n/gen/`, `drift_schemas/`) are committed. Never edit or hand-merge them; regenerate.
 - When a package gets its first tests, add it to the matrix in `.github/workflows/ci.yml`. CI fails if you forget.

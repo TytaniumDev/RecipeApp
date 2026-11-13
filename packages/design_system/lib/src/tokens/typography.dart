@@ -14,9 +14,10 @@ abstract final class AppFonts {
 
 /// Builds a style in one of our variable fonts.
 ///
-/// Both fonts are variable, so the weight is set as a font variation as well
-/// as a [FontWeight]. Newsreader also gets its optical size axis set to the
-/// text size, which keeps it crisp from 22 to 57 px.
+/// Both fonts are variable. Since Flutter 3.41 a [FontWeight] drives the
+/// `wght` axis directly, so the weight needs no font variation. Newsreader
+/// also gets its optical size axis set to the text size, which keeps it crisp
+/// from 22 to 57 px.
 TextStyle appTextStyle({
   required String family,
   required int weight,
@@ -32,8 +33,8 @@ TextStyle appTextStyle({
     fontFamily: family,
     fontSize: size,
     height: height,
-    fontWeight: FontWeight.values.firstWhere((w) => w.value == weight),
-    fontVariations: [FontVariation.weight(weight.toDouble()), ?opticalSize],
+    fontWeight: FontWeight(weight),
+    fontVariations: opticalSize == null ? null : [opticalSize],
     fontFeatures: tabular ? const [FontFeature.tabularFigures()] : null,
   );
 }

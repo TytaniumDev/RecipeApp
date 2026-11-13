@@ -33,6 +33,7 @@ Each decision is marked:
 | Area | Choice | Status |
 |---|---|---|
 | UI framework | Flutter (iOS, Android, web) | Decided |
+| Toolchain | Latest stable Flutter and Dart (3.50 and 3.14 today), pinned in `.fvmrc`; Material from `material_ui` (§16.1) | Decided |
 | State management and DI | Riverpod 3 with code generation | Decided |
 | Local database | Drift (SQLite; WebAssembly SQLite on web) | Decided |
 | Sync model | Change log with per-field merge and hybrid logical clocks | Decided |
@@ -313,6 +314,21 @@ Because both carry the same change log, **switching transports** means replaying
 - **Not used:** the Very Good CLI starter template, because it is built around Bloc and we use Riverpod.
 - **Merging:** PRs merge automatically once CI is green.
 
+### 16.1 Toolchain and language *(Decided)*
+
+We track the latest stable Flutter and Dart and use nothing that is deprecated. The baseline, checked against the Flutter 3.41–3.50 and Dart 3.10–3.14 release notes:
+
+- **Versions:** Flutter 3.50 with Dart 3.14, pinned in `.fvmrc` and read by CI. Every package's SDK constraint is `^3.14.0`.
+- **Material and Cupertino are packages.** `package:flutter/material.dart` and `cupertino.dart` are deprecated (3.47, formally in 3.50). Import `package:material_ui/material_ui.dart` (and `package:cupertino_ui/cupertino_ui.dart` if we ever need Cupertino widgets). New `flutter create` projects do the same.
+- **Localization delegates** come from `material_ui`: `[AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates]`. The legacy delegates in `flutter_localizations` are deprecated. `flutter gen-l10n` still imports `flutter_localizations` in its generated file, so the app keeps that dependency for codegen only; never import it in our code.
+- **Variable fonts:** since 3.41 `FontWeight` drives a variable font's `wght` axis and takes any value from 1 to 1000. Set weight with `FontWeight` only, never `FontVariation.weight`. Other axes (Newsreader's optical size) still use `FontVariation`.
+- **Constructors:** the concise syntax (`new(...)`, `const new _(...)`, `factory(...)`) is enforced by `very_good_analysis`. Primary constructors (Dart 3.13) are not used yet: `very_good_analysis` doesn't enable `use_primary_constructors`, and its fix rewrites widgets, enums, and Drift DAOs into one long header that drops per-field docs. We revisit when the lint set adopts it.
+- **Dot shorthands** (Dart 3.10): use them for enum values and static members when the type is obvious from the context, as in `themeMode: .system` or `labelType: extended ? .none : .all`. Keep the type name where the context is `dynamic` or `Object`, such as `expect(...)` and annotations.
+- **Null-aware elements:** `[?maybeItem]` instead of `if (x != null) x`.
+- **Web:** `dart:js_interop` and `package:web` only; `dart:html`, `dart:js`, and `package:js` are deprecated.
+- **Android:** project files match the 3.50 `flutter create` template (AGP 9.3, Gradle 9.5, Kotlin 2.4, Java 17).
+- **Upgrading:** bump `.fvmrc`, run `flutter pub upgrade --major-versions`, then `dart migrate` (Dart 3.14) and `dart fix --apply` in each package, then read the release notes for breaking changes and update this section.
+
 ## 17. Other defaults *(open to review)*
 
 | Area | Choice | Why |
@@ -320,10 +336,9 @@ Because both carry the same change log, **switching transports** means replaying
 | Routing | `go_router` | Official, URL-based (needed for web and share links), deep links |
 | Models | `freezed` + `json_serializable` | Value equality (needed for §5), immutable copies, JSON for sync |
 | Errors | Typed result values in the domain; exceptions only at layer boundaries | Predictable, testable error handling |
-| Localization | `flutter_localizations` + ARB files from day one, English only at launch | Avoids retrofitting strings later |
+| Localization | ARB files with `flutter gen-l10n` and `material_ui` delegates (§16.1), English only at launch | Avoids retrofitting strings later |
 | Crash reporting | Sentry | One tool across iOS, Android, and web |
 | Subscriptions | RevenueCat | Handles both stores and web billing |
-| Flutter version | Latest stable, pinned with FVM | Same toolchain locally and in CI |
 
 ## 18. Open questions
 

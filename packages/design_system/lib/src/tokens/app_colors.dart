@@ -53,16 +53,16 @@ class AppColors extends ThemeExtension<AppColors> {
 
   /// Custom colors for the cookingLight scheme.
   static const cookingLight = AppColors(
-    protein: Color(0xFF5F2D24),
+    protein: Color(0xFF57261E),
     proteinContainer: Color(0xFFFFDAD4),
     onProteinContainer: Color(0xFF370E08),
-    carbs: Color(0xFF513600),
+    carbs: Color(0xFF493000),
     carbsContainer: Color(0xFFFFDEAE),
     onCarbsContainer: Color(0xFF281900),
-    fat: Color(0xFF003E65),
+    fat: Color(0xFF00375B),
     fatContainer: Color(0xFFCEE5FF),
     onFatContainer: Color(0xFF001D33),
-    warning: Color(0xFF5B3100),
+    warning: Color(0xFF512B00),
     warningContainer: Color(0xFFFFDCC0),
     onWarningContainer: Color(0xFF2D1600),
   );

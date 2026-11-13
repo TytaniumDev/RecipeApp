@@ -24,12 +24,6 @@ void main() {
         'surface-container-highest': scheme.surfaceContainerHighest,
       };
 
-      // Macro and warning text sits on surfaces up to surface-container-high
-      // (§4.3). Highest is for text field fills and table headers, where
-      // these colors are not used as text.
-      final macroSurfaces = Map.of(surfaces)
-        ..remove('surface-container-highest');
-
       final pairs = <String, (Color, Color)>{
         'on-primary on primary': (scheme.onPrimary, scheme.primary),
         'on-primary-container on primary-container': (
@@ -78,7 +72,7 @@ void main() {
           'primary on $surface': (scheme.primary, color),
         },
         for (final MapEntry(key: surface, value: color)
-            in macroSurfaces.entries) ...{
+            in surfaces.entries) ...{
           'protein on $surface': (app.protein, color),
           'carbs on $surface': (app.carbs, color),
           'fat on $surface': (app.fat, color),

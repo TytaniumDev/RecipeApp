@@ -21,7 +21,7 @@ class AppShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selectedIndex = navigationShell.currentIndex;
-    if (WindowSizeClass.of(context) == WindowSizeClass.compact) {
+    if (WindowSizeClass.of(context) == .compact) {
       return Scaffold(
         body: navigationShell,
         bottomNavigationBar: _BottomNavigation(
@@ -95,9 +95,7 @@ class _SideNavigation extends StatelessWidget {
       selectedIndex: selectedIndex,
       onDestinationSelected: onSelected,
       extended: extended,
-      labelType: extended
-          ? NavigationRailLabelType.none
-          : NavigationRailLabelType.all,
+      labelType: extended ? .none : .all,
       destinations: [
         for (final destination in _destinations)
           NavigationRailDestination(
