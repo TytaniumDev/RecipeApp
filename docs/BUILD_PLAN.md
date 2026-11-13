@@ -29,8 +29,8 @@ Every task starts after the **scaffold** (task `S0`, a short series of PRs built
 | `packages/data` | Full Drift schema for all §7.1 tables including `change_log` and `sync_state`, one table file per aggregate under `lib/src/tables/`, and one empty DAO per aggregate already registered in `@DriftDatabase`. **No** repository implementations and **no** FTS5 yet |
 | `packages/design_system` | Tokens and theme (DESIGN_SYSTEM §13.1 `tokens/` and `theme/`). **No** §9.2 components yet |
 | App shell | `lib/app/router.dart` composes `lib/features/<name>/<name>_routes.dart` with a placeholder screen per feature; shell with Library, Grocery list, and Settings tabs |
-| Shared app code | `AsyncValueView` in `lib/shared/widgets/`, `BuildCounter` in `test/helpers/`, one `lib/l10n/app_en.arb` |
-| Bootstrap | `bootstrap.dart` with stub interfaces for `ErrorReporter`, auth, entitlements, and the nutrition API |
+| Shared app code | `AsyncValueView` in `lib/shared/widgets/`, `BuildCounter` and `pumpApp` in `test/helpers/`, one `lib/l10n/arb/app_en.arb` read through `context.l10n` |
+| Bootstrap | `bootstrap.dart` wiring `ErrorReporter` into Flutter's error hooks. Stub interfaces and providers for `ErrorReporter`, `AuthService`, `Entitlements`, and `NutritionApi` in `lib/app/services/`; one throwing provider per repository interface in `lib/app/providers/repositories.dart`; the database provider in `lib/app/providers/database.dart` |
 | Conventions | `CLAUDE.md` with coding rules (small widgets, Riverpod patterns, tests) |
 | App id | `dev.tytanium.recipeapp` (can change until the store records exist, see §8) |
 
@@ -59,7 +59,8 @@ Some files are touched by many tasks. Keep each change to them small, so conflic
 | `pubspec.lock` | Never hand-merge. After a rebase, run `flutter pub get` and commit the result |
 | Generated code (`*.g.dart`, `*.freezed.dart`, Drift schema snapshots) | Never hand-merge. After a rebase, rerun `build_runner` and commit the result |
 | `packages/design_system/lib/design_system.dart` | Append one `export` line per new widget |
-| `apps/recipe_app/lib/l10n/app_en.arb` | Add keys in your feature's block, prefixed with the feature name (`cooking_nextStep`). Never rename or remove another feature's keys |
+| `apps/recipe_app/lib/app/providers/repositories.dart` | A data task replaces only the body of its own repository's provider |
+| `apps/recipe_app/lib/l10n/arb/app_en.arb` | Add keys in your feature's block, prefixed with the feature name (`cooking_nextStep`). Never rename or remove another feature's keys |
 | `packages/domain` entities and interfaces | Additive changes only (new fields with defaults, new methods). Anything else is a separate small PR merged first, see §3.3 |
 
 ### 3.3 Changes to shared foundations

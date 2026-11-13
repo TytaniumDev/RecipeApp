@@ -31,6 +31,9 @@ jobs:
       - name: 🧭 Every package with tests is in the CI matrix
         run: .github/scripts/check_ci_matrix.sh
 
+      - name: 🎨 App code uses design tokens
+        run: .github/scripts/check_design_tokens.sh
+
       - name: 🔒 pubspec.lock is up to date
         run: flutter pub get --enforce-lockfile
 
@@ -65,6 +68,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - package: apps/recipe_app
+            min_coverage: 70
           - package: packages/data
             min_coverage: 90
           - package: packages/design_system
@@ -76,16 +81,40 @@ jobs:
       working_directory: ${{ matrix.package }}
       flutter_version_file: .fvmrc
       min_coverage: ${{ matrix.min_coverage }}
-      # Drift table classes are declarations that never run; the schema is
-      # covered by the snapshot check in the workspace job instead.
-      coverage_excludes: "**/*.g.dart **/*.freezed.dart lib/src/tables/**"
+      # Generated code is excluded, and so are Drift table classes: they are
+      # declarations that never run, covered by the schema snapshot check.
+      coverage_excludes: >-
+        **/*.g.dart **/*.freezed.dart lib/src/tables/** lib/l10n/gen/**
+
+  # The web build catches problems that tests can't, such as a dependency
+  # that doesn't compile for the web.
+  web:
+    name: Web build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v7
+
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2.23.0
+        with:
+          flutter-version-file: .fvmrc
+          cache: true
+
+      - name: 📦 Install Dependencies
+        run: flutter pub get
+
+      - name: 🌐 Build
+        working-directory: apps/recipe_app
+        run: flutter build web --release
 
   # The single required status check for branch protection. It passes only
   # when every job above passed, so new jobs never need new protection rules.
   ci-passed:
     name: CI passed
     if: ${{ always() }}
-    needs: [workspace, package]
+    needs: [workspace, package, web]
     runs-on: ubuntu-latest
     steps:
       - name: Check that every job passed
