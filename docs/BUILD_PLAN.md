@@ -250,7 +250,7 @@ Each feature task owns `app/lib/features/<name>/**` and `app/test/features/<name
 
 | ID | Task | Owns | Depends on | Done when |
 |---|---|---|---|---|
-| REL-1 | **Release pipeline.** Signed iOS and Android builds, TestFlight and Play internal testing uploads, Firebase Hosting deploy for web, Sentry symbol and source-map upload, environment config for dev and prod Firebase projects. See open question §9.2 | `.github/workflows/release*.yaml`, `apps/recipe_app/ios/fastlane/` or equivalent, `apps/recipe_app/android/fastlane/` | §8 accounts, OBS-1 | A tagged commit produces builds testers can install |
+| REL-1 | **Release pipeline.** Signed iOS and Android builds, TestFlight and Play internal testing uploads, Firebase Hosting deploy for web, Sentry symbol and source-map upload. Uses the single Firebase project (§8.1). See open question §9.2 | `.github/workflows/release*.yaml`, `apps/recipe_app/ios/fastlane/` or equivalent, `apps/recipe_app/android/fastlane/` | §8 accounts, OBS-1 | A tagged commit produces builds testers can install |
 | E2E-1 | **Integration tests.** Import → edit → cook → grocery list; offline edit → sync on two devices; share jointly → edit → see on the other device (ENGINEERING §15) | `app/integration_test/**` | All features | Runs in CI on web and one mobile target |
 
 ## 7. Beta readiness
@@ -277,15 +277,15 @@ The order below is the order to do them in, because later items depend on earlie
 
 ### 8.1 Firebase (needed by `BE-*`, `SYN-5`, `SHR-1`, `APP-ACC`, `PRO-1`, `REL-1`)
 
-Recommended: two projects, `recipeapp-dev` and `recipeapp-prod`, so testing never touches real users' data.
+One project only, with no dev and prod split (Tyler, 2026-11-13). Day-to-day development and tests run against the local emulators, so the real project is only touched by real devices and the beta.
 
-- [ ] Create both projects at [console.firebase.google.com](https://console.firebase.google.com). Google Analytics can be off.
-- [ ] Upgrade both to the **Blaze** (pay as you go) plan, which Cloud Functions requires. Set a **budget alert** in Google Cloud Billing (for example $10 a month) so costs never surprise you.
-- [ ] Add an iOS app, an Android app, and a web app to each project, using the app id from §8.0.
+- [ ] Create the project at [console.firebase.google.com](https://console.firebase.google.com). Google Analytics can be off.
+- [ ] Upgrade it to the **Blaze** (pay as you go) plan, which Cloud Functions requires. Set a **budget alert** in Google Cloud Billing (for example $10 a month) so costs never surprise you.
+- [ ] Add an iOS app, an Android app, and a web app to the project, using the app id from §8.0.
 - [ ] Turn on **Firestore** (production mode, region close to you, for example `us-central1`), **Cloud Storage**, and **Hosting**.
 - [ ] **App Check:** register App Attest (iOS), Play Integrity (Android), and reCAPTCHA Enterprise (web).
 - [ ] For CI deploys (`REL-1`): create a service account with the Firebase deploy roles, or set up Workload Identity Federation for GitHub, and add it as a GitHub Actions secret.
-- [ ] Tell an agent the project ids. It runs `flutterfire configure` and commits the generated config (these config files are not secrets).
+- [ ] Tell an agent the project id. It runs `flutterfire configure` and commits the generated config (these config files are not secrets).
 
 ### 8.2 Apple Developer Program (needed by Apple sign-in, iOS builds, TestFlight, iOS purchases)
 
@@ -326,7 +326,7 @@ Costs $25 once.
 
 ### 8.6 Nutrition data (needed by `BE-2`, `NUT-3`)
 
-- [ ] **USDA FoodData Central API key:** sign up at [fdc.nal.usda.gov/api-key-signup](https://fdc.nal.usda.gov/api-key-signup.html) (it is an api.data.gov key, free; the default limit is 1,000 requests an hour, which the proxy's cache keeps us under). Store it as a function secret: `firebase functions:secrets:set USDA_API_KEY`, once per project.
+- [ ] **USDA FoodData Central API key:** sign up at [fdc.nal.usda.gov/api-key-signup](https://fdc.nal.usda.gov/api-key-signup.html) (it is an api.data.gov key, free; the default limit is 1,000 requests an hour, which the proxy's cache keeps us under). Store it as a function secret: `firebase functions:secrets:set USDA_API_KEY`.
 - [ ] **Open Food Facts:** no account or key. Their API asks apps to send a `User-Agent` such as `RecipeApp/1.0 (contact@example.com)`, using the contact email from §8.0.
 
 ### 8.7 RevenueCat and Stripe (needed by `PRO-1`)
@@ -371,4 +371,3 @@ Costs $25 once.
 
 1. **Bundled USDA file:** commit the generated SQLite file (with Git LFS), or build it in CI and publish it as a release asset the app build downloads? Committing is simpler; building in CI keeps the repo small and the file reproducible. `USDA-1` needs the answer before it merges.
 2. **Mobile build tooling:** fastlane in GitHub Actions (free, more setup) or a hosted Flutter CI such as Codemagic (less setup, paid beyond its free minutes)? Decide before `REL-1`.
-3. **One Firebase project or two:** §8.1 recommends separate dev and prod projects. One project is simpler for a small beta, at the cost of testing on real data.
