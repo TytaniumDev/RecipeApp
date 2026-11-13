@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  # One job per workspace member, from Very Good Ventures' reusable workflow:
+  # format, analyze, tests, and a coverage gate (ENGINEERING.md §16).
+  # Every member uses flutter_package, even pure Dart ones, because a pub
+  # workspace resolves all members together and the app needs the Flutter SDK.
+  # When you add a package to the root pubspec.yaml, add it here too.
+  package:
+    name: ${{ matrix.package }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - package: packages/domain
+            min_coverage: 90
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v2
+    with:
+      working_directory: ${{ matrix.package }}
+      flutter_version_file: .fvmrc
+      min_coverage: ${{ matrix.min_coverage }}
+      coverage_excludes: "**/*.g.dart **/*.freezed.dart"
+
+  # The single required status check for branch protection. It passes only
+  # when every job above passed, so new jobs never need new protection rules.
+  ci-passed:
+    name: CI passed
+    if: ${{ always() }}
+    needs: [package]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check that every job passed
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "Job results: $RESULTS"
+          for result in $RESULTS; do
+            if [ "$result" != "success" ]; then
+              exit 1
+            fi
+          done
