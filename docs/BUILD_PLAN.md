@@ -32,7 +32,7 @@ Every task starts after the **scaffold** (task `S0`, a short series of PRs built
 | Shared app code | `AsyncValueView` in `lib/shared/widgets/`, `BuildCounter` and `pumpApp` in `test/helpers/`, one `lib/l10n/arb/app_en.arb` read through `context.l10n` |
 | Bootstrap | `bootstrap.dart` wiring `ErrorReporter` into Flutter's error hooks. Stub interfaces and providers for `ErrorReporter`, `AuthService`, `Entitlements`, and `NutritionApi` in `lib/app/services/`; one throwing provider per repository interface in `lib/app/providers/repositories.dart`; the database provider in `lib/app/providers/database.dart` |
 | Conventions | `CLAUDE.md` with coding rules (small widgets, Riverpod patterns, tests) |
-| App id | `dev.tytanium.sousvite` (Android application id and iOS bundle id, registered in Firebase; permanent once the store records exist, see §8) |
+| App id | `com.tytaniumdev.sousvite` (Android application id and iOS bundle id, registered in Firebase; permanent once the store records exist, see §8) |
 
 If any of this turns out to be missing when the scaffold merges, add a task for it to wave 1 before anything that depends on it.
 
@@ -274,7 +274,7 @@ The order below is the order to do them in, because later items depend on earlie
 
 ### 8.0 Decide first
 
-- [x] **App name and id.** The app is **Sousvite** (Tyler, 2026-11-14; briefly Sousline on 2026-11-13), with app id `dev.tytanium.sousvite` on iOS and Android. The id becomes permanent once the App Store and Play records exist.
+- [x] **App name and id.** The app is **Sousvite** (Tyler, 2026-11-14; briefly Sousline on 2026-11-13), with app id `com.tytaniumdev.sousvite` on iOS and Android, matching Tyler's other `com.tytaniumdev.*` apps (it was `dev.tytanium.sousvite` until 2026-11-14, before any store record existed). The id becomes permanent once the App Store and Play records exist.
 - [x] **Contact email** for the stores, the OAuth consent screen, and the Open Food Facts `User-Agent`: Tyler's developer address (2026-11-13), the one on the privacy policy page.
 - [x] **Privacy policy URL.** Needed by both stores and the OAuth consent screen: `https://sousvite.web.app/privacy/` once the web app is deployed (`REL-1`); until then the stores can link the file on GitHub. The page is `apps/sousvite/web/privacy/index.html`, so every web deploy (`REL-1`) publishes it with the app. Update it when a feature changes what data leaves the device.
 
@@ -294,8 +294,8 @@ One project only, with no dev and prod split (Tyler, 2026-11-13). Day-to-day dev
 
 Costs $99 a year. Enrollment can take a day or two, so start early.
 
-- [ ] Enroll at [developer.apple.com/programs](https://developer.apple.com/programs/) as an individual (or as an organization if you have a company; that needs a D-U-N-S number).
-- [ ] Create an **App ID** with the app id from §8.0 and turn on the **Sign in with Apple** capability.
+- [x] Enroll at [developer.apple.com/programs](https://developer.apple.com/programs/) as an individual (or as an organization if you have a company; that needs a D-U-N-S number). Team ID `F2HXQGU2CC`.
+- [x] Create an **App ID** with the app id from §8.0 and turn on the **Sign in with Apple** capability. Registered 2026-11-14 as `Sousvite`.
 - [ ] For Sign in with Apple on Android and web: create a **Services ID**, set its return URL to the Firebase auth handler (`https://<project-id>.firebaseapp.com/__/auth/handler`), and create a **Sign in with Apple key** (`.p8`). Enter the Services ID, Team ID, Key ID, and key in Firebase Auth → Apple provider.
 - [ ] In **App Store Connect**, create the app record, sign the **Paid Apps agreement**, and fill in banking and tax details (needed before any subscription works, even in TestFlight sandbox).
 - [ ] Create an **App Store Connect API key** for CI uploads and an **In-App Purchase key** for RevenueCat (§8.7).
