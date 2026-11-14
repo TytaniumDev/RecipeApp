@@ -283,9 +283,9 @@ The order below is the order to do them in, because later items depend on earlie
 One project only, with no dev and prod split (Tyler, 2026-11-13). Day-to-day development and tests run against the local emulators, so the real project is only touched by real devices and the beta.
 
 - [x] Create the project at [console.firebase.google.com](https://console.firebase.google.com). Google Analytics can be off. Created 2026-11-14: project id **`sousvite`** (number 761600243200), so the auth domain is `sousvite.firebaseapp.com` and Hosting is `sousvite.web.app`. (An earlier `sousline` project from the brief Sousline name is unused and can be deleted.)
-- [ ] Upgrade it to the **Blaze** (pay as you go) plan, which Cloud Functions requires. Set a **budget alert** in Google Cloud Billing (for example $10 a month) so costs never surprise you.
+- [x] Upgrade it to the **Blaze** (pay as you go) plan, which Cloud Functions requires. Set a **budget alert** in Google Cloud Billing (for example $10 a month) so costs never surprise you.
 - [x] Add an iOS app, an Android app, and a web app to the project, using the app id from §8.0. Registered 2026-11-14 as `Sousvite iOS`, `Sousvite Android`, and `Sousvite Web`.
-- [ ] Turn on **Firestore** (production mode, region close to you, for example `us-central1`), **Cloud Storage**, and **Hosting**.
+- [x] Turn on **Firestore** (production mode, region close to you, for example `us-central1`), **Cloud Storage**, and **Hosting**. Done 2026-11-14 with deny-all rules; Storage is in `us-central1` for the no-cost tier.
 - [ ] **App Check:** register App Attest (iOS), Play Integrity (Android), and reCAPTCHA Enterprise (web).
 - [ ] For CI deploys (`REL-1`): create a service account with the Firebase deploy roles, or set up Workload Identity Federation for GitHub, and add it as a GitHub Actions secret.
 - [ ] Tell an agent the project id. It runs `flutterfire configure` and commits the generated config (these config files are not secrets).
@@ -305,10 +305,10 @@ Costs $99 a year. Enrollment can take a day or two, so start early.
 
 These live in the Google Cloud project that Firebase created.
 
-- [ ] Firebase Auth → Sign-in method → turn on **Google**.
-- [ ] Google Cloud console → **OAuth consent screen**: app name, support email, privacy policy URL, and the scopes `openid`, `email`, `profile`, and `drive.appdata`. **Branding** (home page and privacy policy links) waits for the real website. Google lists `drive.appdata` among its recommended Drive scopes, so it should only need basic verification, but check how the console classifies it when you add it.
+- [x] Firebase Auth → Sign-in method → turn on **Google**.
+- [x] Google Cloud console → **OAuth consent screen**: app name, support email, privacy policy URL, and the scopes `openid`, `email`, `profile`, and `drive.appdata`. Done 2026-11-14 in Testing mode with Tyler as a test user. The console classifies `drive.appdata` as **non-sensitive**, so no sensitive-scope review is needed. **Branding** (home page and privacy policy links) waits for the real website. Google lists `drive.appdata` among its recommended Drive scopes, so it should only need basic verification, but check how the console classifies it when you add it.
 - [ ] Move the consent screen from **Testing** to **In production** before the beta. In Testing mode Google expires sign-ins after 7 days, which would break Drive sync for testers every week.
-- [ ] Turn on the **Google Drive API** for the project.
+- [x] Turn on the **Google Drive API** for the project.
 - [ ] Add your Android **SHA-1 and SHA-256 fingerprints** to the Firebase Android app: the debug key, your upload key (§8.5), and the Play app signing key (shown in Play Console after the first upload). Google sign-in fails on Android without them.
 
 ### 8.4 Google Play Console (needed by Android builds, Play testing, Android purchases)
