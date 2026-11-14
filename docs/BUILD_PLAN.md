@@ -296,8 +296,9 @@ Costs $99 a year. Enrollment can take a day or two, so start early.
 
 - [x] Enroll at [developer.apple.com/programs](https://developer.apple.com/programs/) as an individual (or as an organization if you have a company; that needs a D-U-N-S number). Team ID `F2HXQGU2CC`.
 - [x] Create an **App ID** with the app id from §8.0 and turn on the **Sign in with Apple** capability. Registered 2026-11-14 as `Sousvite`.
-- [ ] For Sign in with Apple on Android and web: create a **Services ID**, set its return URL to the Firebase auth handler (`https://<project-id>.firebaseapp.com/__/auth/handler`), and create a **Sign in with Apple key** (`.p8`). Enter the Services ID, Team ID, Key ID, and key in Firebase Auth → Apple provider.
-- [ ] In **App Store Connect**, create the app record, sign the **Paid Apps agreement**, and fill in banking and tax details (needed before any subscription works, even in TestFlight sandbox).
+- [x] For Sign in with Apple on Android and web: create a **Services ID**, set its return URL to the Firebase auth handler (`https://<project-id>.firebaseapp.com/__/auth/handler`), and create a **Sign in with Apple key** (`.p8`). Enter the Services ID, Team ID, Key ID, and key in Firebase Auth → Apple provider. Done 2026-11-14: Services ID `com.tytaniumdev.sousvite.signin` with domain `sousvite.firebaseapp.com`; the key is in Tyler's password manager.
+- [x] In **App Store Connect**, create the app record. Created 2026-11-14: name `Sousvite`, SKU `sousvite`, Apple ID `6834863123`, primary language English (U.S.).
+- [ ] Sign the **Paid Apps agreement** and fill in banking and tax details (needed before any subscription works, even in TestFlight sandbox).
 - [ ] Create an **App Store Connect API key** for CI uploads and an **In-App Purchase key** for RevenueCat (§8.7).
 - [ ] Add your beta friends as TestFlight testers once `REL-1` lands.
 
@@ -315,7 +316,7 @@ These live in the Google Cloud project that Firebase created.
 
 Costs $25 once.
 
-- [ ] Create a developer account at [play.google.com/console](https://play.google.com/console) and verify your identity.
+- [ ] Create a developer account at [play.google.com/console](https://play.google.com/console) and verify your identity. Tyler's account exists but is restricted (2026-11-14): Google removed the profile in November 2024 because verification was never finished, so verification has to be completed before the app can be created.
 - [ ] Create the app with the app id from §8.0.
 - [ ] Set up a **payments profile** (merchant account) so you can sell subscriptions.
 - [ ] Set up an **internal testing** track for your beta friends (up to 100 testers, no review wait).
