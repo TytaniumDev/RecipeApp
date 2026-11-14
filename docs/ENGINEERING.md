@@ -1,4 +1,4 @@
-# Sousline: Engineering Design
+# Sousvite: Engineering Design
 
 | | |
 |---|---|
@@ -11,7 +11,7 @@
 
 ## 1. Purpose
 
-This document records the architecture and technology decisions for Sousline, and the reasoning behind them. The PRD says *what* we build. This doc says *how*. When a decision changes, update this doc in the same pull request as the change.
+This document records the architecture and technology decisions for Sousvite, and the reasoning behind them. The PRD says *what* we build. This doc says *how*. When a decision changes, update this doc in the same pull request as the change.
 
 Each decision is marked:
 
@@ -86,7 +86,7 @@ The repo is a [pub workspace](https://dart.dev/tools/pub/workspaces): one root `
 
 ```
 apps/
-  sousline/                Flutter app. Features as folders:
+  sousvite/                Flutter app. Features as folders:
                            library, recipe, editor, import, nutrition,
                            cooking, grocery, experiments, sharing,
                            settings, account
@@ -109,7 +109,7 @@ functions/                 Firebase Cloud Functions (TypeScript)
 Rules:
 
 - `domain` depends on nothing in the repo. Pure packages (`ingredient_parser`, `recipe_import`, `nutrition`, `measuring`) depend only on `domain`.
-- Only `apps/sousline` depends on Flutter, except for `design_system`.
+- Only `apps/sousvite` depends on Flutter, except for `design_system`.
 - Features are folders inside the app, not packages, to avoid glue code between them.
 - Each feature folder mirrors the layers: `presentation/`, `application/`, and feature-specific `data/` when needed.
 
@@ -206,7 +206,7 @@ abstract interface class SyncTransport {
 }
 ```
 
-| | Google Drive (free) | Sousline cloud (Pro) |
+| | Google Drive (free) | Sousvite cloud (Pro) |
 |---|---|---|
 | Storage | Hidden `appDataFolder` in the user's Drive (`drive.appdata` scope) | Firestore |
 | Layout | Append-only change files per device, plus periodic snapshot files | `spaces/{spaceId}/changes/{changeId}`, plus snapshots |
@@ -247,7 +247,7 @@ Because both carry the same change log, **switching transports** means replaying
 - Signing in is optional. Signed out, the app runs entirely on Drift with a local device id.
 - Google sign-in requests the `drive.appdata` scope only when Drive sync is turned on.
 - **Signing in later** attaches the existing local data to the account and uploads it through the chosen transport (PRD 7.9).
-- **Apple users** can use only Sousline cloud sync, since Drive needs a Google account.
+- **Apple users** can use only Sousvite cloud sync, since Drive needs a Google account.
 
 ## 11. Nutrition *(Decided)*
 

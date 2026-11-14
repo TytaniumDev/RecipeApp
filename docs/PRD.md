@@ -1,17 +1,17 @@
-# Sousline: Product Requirements Document
+# Sousvite: Product Requirements Document
 
 | | |
 |---|---|
 | **Status** | Draft |
 | **Owner** | Tyler |
 | **Last updated** | 2026-11-12 |
-| **Name** | Sousline (Tyler, 2026-11-13) |
+| **Name** | Sousvite (Tyler, 2026-11-14) |
 
 ---
 
 ## 1. Overview
 
-Sousline is a cross-platform recipe manager, free to use with an optional Pro subscription, that brings together three jobs home cooks currently split across several apps: **keeping recipes**, **knowing what's in them nutritionally**, and **actually cooking them**. Users can import a recipe from any website or from Umami, or write their own. They get accurate nutrition and macros for every recipe automatically, turn recipes into a grocery list, and cook with a guided cooking mode that tells them exactly how much of each ingredient to add, and with what, at the moment they need it.
+Sousvite is a cross-platform recipe manager, free to use with an optional Pro subscription, that brings together three jobs home cooks currently split across several apps: **keeping recipes**, **knowing what's in them nutritionally**, and **actually cooking them**. Users can import a recipe from any website or from Umami, or write their own. They get accurate nutrition and macros for every recipe automatically, turn recipes into a grocery list, and cook with a guided cooking mode that tells them exactly how much of each ingredient to add, and with what, at the moment they need it.
 
 The app works fully offline and syncs between phone, tablet, and web.
 
@@ -177,15 +177,15 @@ The app launches as one complete release. Every feature in 7.1 to 7.11 is part o
 - Everything works offline, including import review, cooking, nutrition, and grocery lists. Changes sync automatically and seamlessly once back online, without lost edits.
 - **Two ways to sync**, chosen by the user (see 7.12):
   - **Google Drive sync (free):** The library is stored in the user's own Google Drive and syncs through it. It requires signing in with Google, and works on iOS, Android, and web.
-  - **Sousline cloud sync (Pro):** The library syncs through Sousline's own service. It works with Google or Apple sign-in, and is the faster, more seamless option.
+  - **Sousvite cloud sync (Pro):** The library syncs through Sousvite's own service. It works with Google or Apple sign-in, and is the faster, more seamless option.
 - Users can switch between the two at any time without losing anything.
 
 ### 7.9 Accounts
 - A simple sign-in so a user's library follows them across devices.
 - **Signing in is optional.** The whole app works without an account on a single device. Sign-in is only needed for sync across devices and sharing.
-- Google Drive sync requires signing in with Google. Apple sign-in users sync through Sousline cloud sync. Signing in later brings everything the user already created into their account.
+- Google Drive sync requires signing in with Google. Apple sign-in users sync through Sousvite cloud sync. Signing in later brings everything the user already created into their account.
 - Sign in with **Google** or **Apple** only. The app does not manage its own usernames or passwords.
-- Users can **delete their account** from Settings. It removes the account and everything stored on Sousline's servers, keeps a local copy on the device, and leaves jointly shared recipes with the other people in the share. Both app stores require this.
+- Users can **delete their account** from Settings. It removes the account and everything stored on Sousvite's servers, keeps a local copy on the device, and leaves jointly shared recipes with the other people in the share. Both app stores require this.
 
 ### 7.10 Sharing
 - **Between app users:** Share a single recipe or a whole folder with another user. When sharing, the sharer chooses one of two methods:
@@ -212,11 +212,11 @@ The goal of Pro is to cover the cost of running the service, with a little extra
 | Everything on one device, fully offline | ✓ | ✓ |
 | Import, nutrition, cooking mode, grocery lists, experiments | ✓ | ✓ |
 | Sync across devices and web through Google Drive | ✓ | ✓ |
-| Sync through Sousline cloud (Google or Apple sign-in) | | ✓ |
+| Sync through Sousvite cloud (Google or Apple sign-in) | | ✓ |
 | Sharing between app users, jointly or as a copy | | ✓ |
 | View-only recipe links for anyone | ✓ | ✓ |
 
-- Sharing is Pro because it always needs Sousline's service, even for Google Drive users. Jointly shared recipes are stored on Sousline's service so everyone sees the same version.
+- Sharing is Pro because it always needs Sousvite's service, even for Google Drive users. Jointly shared recipes are stored on Sousvite's service so everyone sees the same version.
 - **Who needs Pro:** Sharing requires Pro, but recipients don't need it. A joint share keeps working as long as at least one person in it has Pro. If nobody in a joint share has Pro anymore, it stops syncing between people and everyone keeps their own copy.
 - Pro is a low-priced subscription, with yearly billing as the default. The exact price is set once real service costs are known after implementation, before public release.
 - Beta testers don't get free Pro.
@@ -225,7 +225,7 @@ The goal of Pro is to cover the cost of running the service, with a little extra
 ## 8. Success metrics
 
 ### North star
-**Sousline is the first app opened to add a recipe, cook, or answer a nutrition question.** For Tyler, this means Umami and recipe entry in MacroFactor are no longer needed.
+**Sousvite is the first app opened to add a recipe, cook, or answer a nutrition question.** For Tyler, this means Umami and recipe entry in MacroFactor are no longer needed.
 
 ### Product metrics
 
@@ -243,7 +243,7 @@ Targets are starting points and will be refined after launch.
 
 ## 9. Assumptions and constraints
 
-- Ongoing costs must stay low. Nutrition data is free, free-tier sync runs through the user's own Google Drive, and Pro revenue covers Sousline cloud sync and sharing.
+- Ongoing costs must stay low. Nutrition data is free, free-tier sync runs through the user's own Google Drive, and Pro revenue covers Sousvite cloud sync and sharing.
 - iOS, Android, and web are built from a single shared codebase, so behavior is consistent everywhere.
 - **Release plan:** A private beta with Tyler and a small group of friends comes before the public release. There is no target date.
 - The first release is English-only and supports US customary and metric units.
@@ -256,7 +256,7 @@ Targets are starting points and will be refined after launch.
 | Umami's export format changes or is incomplete | Migration breaks for key users | Validate against real exports early, and document what transfers |
 | Nutrition data is inaccurate, especially crowd-sourced Open Food Facts entries | Loss of trust in the core value | Prefer USDA data, show each match and its source, flag unmatched ingredients. Confirm both sources' license terms, including Open Food Facts' share-alike requirements |
 | Smart step text inserts the wrong amount or ingredient | User cooks the recipe wrong | Show replacements visibly, make them easy to correct, test on a wide set of recipes |
-| Two sync options (Google Drive and Sousline cloud) double the work to build and keep reliable | Slower delivery, sync bugs | Treat both as one sync experience with shared rules, and test switching between them thoroughly |
+| Two sync options (Google Drive and Sousvite cloud) double the work to build and keep reliable | Slower delivery, sync bugs | Treat both as one sync experience with shared rules, and test switching between them thoroughly |
 | Sync conflicts when the same recipe is edited offline on two devices | Lost edits, lost trust | Define clear conflict rules and never silently discard changes |
 | Sharing imported recipes raises copyright concerns | Legal exposure | Keep source attribution, and limit public sharing of imported content |
 | Scope creep, since everything ships in one release | Delays launch, competes with dedicated trackers | Keep a firm feature list, and add features only by explicit decision. Daily food logging is a non-goal |

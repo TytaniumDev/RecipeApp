@@ -1,6 +1,6 @@
 name: domain
 description: >-
-  Entities, value objects, repository interfaces and pure logic for Sousline.
+  Entities, value objects, repository interfaces and pure logic for Sousvite.
   Depends on nothing else in the repo, and never on Flutter, Drift or Firebase.
 version: 0.1.0
 publish_to: none
