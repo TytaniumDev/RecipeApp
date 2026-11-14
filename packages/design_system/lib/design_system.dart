@@ -1,4 +1,4 @@
-/// Sousline's design tokens, theme, and shared widgets
+/// Sousvite's design tokens, theme, and shared widgets
 /// (docs/DESIGN_SYSTEM.md).
 library;
 

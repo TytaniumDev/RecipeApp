@@ -1,0 +1,53 @@
+{
+  "@@locale": "en",
+
+  "@@x-comment-common": "Shared strings. Feature strings go in their own block below, keys prefixed with the feature name.",
+  "app_title": "Sousvite",
+  "@app_title": {"description": "The app's name, shown in the window title and task switcher."},
+  "common_comingSoon": "Coming soon",
+  "@common_comingSoon": {"description": "Placeholder body for screens that are not built yet."},
+  "common_errorGeneric": "Something went wrong.",
+  "@common_errorGeneric": {"description": "Fallback message when a screen fails to load."},
+  "common_retry": "Try again",
+  "@common_retry": {"description": "Button that retries a failed load."},
+
+  "nav_library": "Library",
+  "@nav_library": {"description": "Navigation destination for the recipe library."},
+  "nav_grocery": "Grocery list",
+  "@nav_grocery": {"description": "Navigation destination for the grocery list."},
+  "nav_settings": "Settings",
+  "@nav_settings": {"description": "Navigation destination for settings."},
+
+  "library_title": "Library",
+  "@library_title": {"description": "Title of the recipe library screen."},
+
+  "recipe_title": "Recipe",
+  "@recipe_title": {"description": "Title of the recipe page before its name loads."},
+
+  "editor_title": "Edit recipe",
+  "@editor_title": {"description": "Title of the recipe editor."},
+
+  "import_title": "Import recipe",
+  "@import_title": {"description": "Title of the recipe import screen."},
+
+  "nutrition_title": "Nutrition",
+  "@nutrition_title": {"description": "Title of the nutrition match review screen."},
+
+  "cooking_title": "Cooking",
+  "@cooking_title": {"description": "Title of cooking mode."},
+
+  "grocery_title": "Grocery list",
+  "@grocery_title": {"description": "Title of the grocery list screen."},
+
+  "experiments_title": "History",
+  "@experiments_title": {"description": "Title of a recipe's history of versions and experiments."},
+
+  "sharing_title": "Share",
+  "@sharing_title": {"description": "Title of the share screen."},
+
+  "settings_title": "Settings",
+  "@settings_title": {"description": "Title of the settings screen."},
+
+  "account_title": "Account",
+  "@account_title": {"description": "Title of the account and sign-in screen."}
+}

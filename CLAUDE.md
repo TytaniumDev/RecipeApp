@@ -1,4 +1,4 @@
-# Sousline
+# Sousvite
 
 A Flutter app (iOS, Android, web) that combines recipes, accurate nutrition, grocery lists, and a smart cooking mode.
 
@@ -16,7 +16,7 @@ If your change contradicts one of these docs, update the doc in the same PR. If 
 ## Layout
 
 ```
-apps/sousline/            Flutter app. Features are folders in lib/features/
+apps/sousvite/            Flutter app. Features are folders in lib/features/
 packages/domain/          Entities, value objects, repository interfaces. Pure Dart
 packages/data/            Drift schema, DAOs, repository implementations. Pure Dart
 packages/design_system/   Tokens, theme, shared widgets. Flutter only
@@ -37,7 +37,7 @@ dart format lib test                             # in a package
 flutter analyze lib test                         # in a package
 very_good test --coverage --min-coverage 90 \
   --exclude-coverage "**/*.g.dart **/*.freezed.dart lib/src/tables/** lib/l10n/gen/**"
-                                                 # in a package; 70 for apps/sousline
+                                                 # in a package; 70 for apps/sousvite
 ```
 
 **Before you push**, in every package you touched: format, analyze with zero issues (infos count), tests pass, coverage meets the gate. At the root: `build_runner` leaves no diff, and `flutter pub get --enforce-lockfile` passes. CI checks all of this. The only required check is **CI passed**, and PRs merge automatically once it's green.
@@ -66,7 +66,7 @@ very_good test --coverage --min-coverage 90 \
 ## Architecture rules
 
 - Layers: presentation → application → domain ← data. The domain knows nothing about Flutter, Drift, or Firebase.
-- Only `apps/sousline` and `packages/design_system` depend on Flutter.
+- Only `apps/sousvite` and `packages/design_system` depend on Flutter.
 - `design_system` never depends on `domain`, Riverpod, or a feature.
 - **Features are folders, not packages:** `lib/features/<name>/` with `presentation/`, `application/`, and `data/` when needed.
 - **A feature's public surface is one file,** `lib/features/<name>/<name>.dart`. Other features import only that file.
@@ -108,7 +108,7 @@ ENGINEERING.md §5 is the rule. In practice:
 
 ## Strings
 
-- Every user-facing string is in `apps/sousline/lib/l10n/arb/app_en.arb`, with an `@key` description.
+- Every user-facing string is in `apps/sousvite/lib/l10n/arb/app_en.arb`, with an `@key` description.
 - Keys are prefixed with the feature: `cooking_nextStep`. Add keys in your feature's block; never rename or remove another feature's keys.
 - Read them with `context.l10n.cooking_nextStep`. Sentence case, no exclamation marks (DESIGN_SYSTEM.md §11).
 
@@ -124,7 +124,7 @@ ENGINEERING.md §5 is the rule. In practice:
 ## Testing
 
 - **Pure packages:** unit tests with `package:test`, 90% coverage. Prefer small hand-written fakes; use `mocktail` where a fake would be heavier than the test.
-- **App:** widget tests with `pumpApp` (theme, l10n, `ProviderScope` with overrides) and `BuildCounter`, both in `apps/sousline/test/helpers/`. 70% coverage.
+- **App:** widget tests with `pumpApp` (theme, l10n, `ProviderScope` with overrides) and `BuildCounter`, both in `apps/sousvite/test/helpers/`. 70% coverage.
 
   ```dart
   final builds = BuildCounter.start();

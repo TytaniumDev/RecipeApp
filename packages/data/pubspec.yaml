@@ -1,6 +1,6 @@
 name: data
 description: >-
-  Drift database schema, DAOs, and repository implementations for Sousline.
+  Drift database schema, DAOs, and repository implementations for Sousvite.
   Pure Dart: the Flutter app opens the database connection and passes it in.
 version: 0.1.0
 publish_to: none

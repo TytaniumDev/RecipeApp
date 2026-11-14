@@ -1,12 +1,12 @@
-name: sousline_workspace
-description: Pub workspace root for Sousline. Lists every member package.
+name: sousvite_workspace
+description: Pub workspace root for Sousvite. Lists every member package.
 publish_to: none
 
 environment:
   sdk: ^3.14.0
 
 workspace:
-  - apps/sousline
+  - apps/sousvite
   - packages/data
   - packages/design_system
   - packages/domain

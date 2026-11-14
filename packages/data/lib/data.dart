@@ -1,5 +1,5 @@
 /// Drift database schema, DAOs, and repository implementations for
-/// Sousline.
+/// Sousvite.
 library;
 
 export 'src/app_database.dart';
