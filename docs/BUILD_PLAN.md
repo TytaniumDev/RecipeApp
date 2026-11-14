@@ -325,7 +325,7 @@ Costs $25 once.
 
 ### 8.5 Signing keys (needed by `REL-1`)
 
-- [ ] **Android upload key:** generate a keystore (`keytool -genkey ...`), back it up somewhere safe outside the repo, and add it plus its passwords as GitHub Actions secrets. Use Play App Signing so Google holds the app signing key.
+- [ ] **Android upload key:** run `tools/secrets/set_github_secrets.sh` on your computer. It creates the keystore in `~/Sousvite-secrets/`, sets it as GitHub Actions secrets, and prints the SHA fingerprints for §8.3. Back up the keystore and its password file in your password manager. Use Play App Signing so Google holds the app signing key.
 - [ ] **iOS:** let the release pipeline manage certificates and profiles through the App Store Connect API key from §8.2 (an agent sets this up in `REL-1`).
 
 ### 8.6 Nutrition data (needed by `BE-2`, `NUT-3`)
@@ -351,7 +351,15 @@ Costs $25 once.
 ### 8.9 GitHub repository settings
 
 - [ ] Branch protection on `main` with the CI checks required (set up by the scaffold thread; confirm it is on).
-- [ ] Add the secrets from §8.1, §8.4, §8.5, and §8.8 under Settings → Secrets and variables → Actions.
+- [ ] Add the secrets from §8.1, §8.4, §8.5, and §8.8 under Settings → Secrets and variables → Actions. `tools/secrets/set_github_secrets.sh` sets them from files in `~/Sousvite-secrets/` and hidden prompts, so no value is pasted anywhere else. Run it again whenever a new key file arrives. `REL-1` reads these names:
+
+  | Secret | From |
+  |---|---|
+  | `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS` | Upload keystore (§8.5), created by the script |
+  | `APP_STORE_CONNECT_KEY_ID`, `APP_STORE_CONNECT_ISSUER_ID`, `APP_STORE_CONNECT_API_KEY` | `AuthKey_<key id>.p8` and the Issuer ID (§8.2) |
+  | `PLAY_SERVICE_ACCOUNT_JSON` | `play-service-account.json` (§8.4) |
+  | `FIREBASE_SERVICE_ACCOUNT` | `firebase-deploy.json` (§8.1) |
+  | `SENTRY_AUTH_TOKEN` | Sentry auth token (§8.8), typed at a hidden prompt |
 
 ### 8.10 Inputs only Tyler has (not accounts)
 
